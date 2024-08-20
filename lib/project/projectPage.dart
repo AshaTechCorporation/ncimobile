@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ncimobile/constants.dart';
+import 'package:ncimobile/project/projectDetailPage.dart';
 import 'package:ncimobile/project/widgets/CardContentProjectWidget.dart';
 import 'package:ncimobile/project/widgets/ContentProjectWidget.dart';
 import 'package:ncimobile/project/widgets/HeadderProjectWidget.dart';
@@ -57,6 +58,9 @@ class _ProjectPageState extends State<ProjectPage> {
                                 padding: EdgeInsets.symmetric(horizontal: size.width * 0.01),
                                 child: ContentProjectWidget(
                                   title: contentTitle[index],
+                                  press: (){
+                                    Navigator.push(context, MaterialPageRoute(builder: (context)=> ProjectDetailPage()));
+                                  },
                                 ),
                               )),
                     ),

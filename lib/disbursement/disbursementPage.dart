@@ -106,6 +106,7 @@ class _DisbursementPageState extends State<DisbursementPage> {
                               padding: EdgeInsets.symmetric(horizontal: size.width * 0.01),
                               child: ContentProjectWidget(
                                 title: contentDisbur[index],
+                                press: (){},
                               ),
                             )),
                   ),
