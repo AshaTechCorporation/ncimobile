@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ncimobile/constants.dart';
+import 'package:ncimobile/disbursement/createDisbursement/createDisbursementPage.dart';
 import 'package:ncimobile/disbursement/widgets/CardDisbursementWidget.dart';
 import 'package:ncimobile/disbursement/widgets/HeadderDisburWidget.dart';
 import 'package:ncimobile/project/widgets/ContentProjectWidget.dart';
@@ -13,6 +14,7 @@ class DisbursementPage extends StatefulWidget {
 }
 
 class _DisbursementPageState extends State<DisbursementPage> {
+  int title = 0;
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -48,34 +50,41 @@ class _DisbursementPageState extends State<DisbursementPage> {
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: size.width * 0.04),
-                  child: Container(
-                    width: size.width * 0.98,
-                    decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 204, 204, 204),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(5.0),
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          offset: Offset(0, 0),
-                          blurRadius: 0.2,
-                          spreadRadius: 0.2,
-                          color: Colors.black26,
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) {
+                        return CreateDisbursementPage();
+                      }));
+                    },
+                    child: Container(
+                      width: size.width * 0.98,
+                      decoration: BoxDecoration(
+                        color: Color.fromARGB(255, 204, 204, 204),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(5.0),
                         ),
-                      ],
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'ตั้งเบิก',
-                            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                        boxShadow: [
+                          BoxShadow(
+                            offset: Offset(0, 0),
+                            blurRadius: 0.2,
+                            spreadRadius: 0.2,
+                            color: Colors.black26,
                           ),
-                          Text('ทำการขอเบิกค่าใช้จ่ายจากเบี้ยเลี้ยงหรือโครงการ'),
                         ],
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'ตั้งเบิก',
+                              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                            ),
+                            Text('ทำการขอเบิกค่าใช้จ่ายจากเบี้ยเลี้ยงหรือโครงการ'),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -86,7 +95,7 @@ class _DisbursementPageState extends State<DisbursementPage> {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: size.width * 0.04),
                   child: Text(
-                    'คำขอเบิกจ่ายเงินของคุณ (5)',
+                    'คำขอเบิกจ่ายเงินของคุณ (${contentDisbur.length})',
                     style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -101,16 +110,45 @@ class _DisbursementPageState extends State<DisbursementPage> {
                   padding: EdgeInsets.symmetric(horizontal: size.width * 0.04),
                   child: Row(
                     children: List.generate(
-                        contentDisbur.length,
+                        contentTitle.length,
                         (index) => Padding(
                               padding: EdgeInsets.symmetric(horizontal: size.width * 0.01),
-                              child: ContentProjectWidget(
-                                title: contentDisbur[index],
-                                press: (){},
+                              child: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    title = index;
+                                  });
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: index == title ? kMainColor : Colors.white,
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(5.0),
+                                    ),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        offset: Offset(0, 0),
+                                        blurRadius: 0.2,
+                                        spreadRadius: 0.2,
+                                        color: Colors.black26,
+                                      ),
+                                    ],
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Text(
+                                      contentTitle[index],
+                                      style: TextStyle(
+                                        color: index == title ? Colors.white : Colors.black,
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               ),
                             )),
                   ),
                 ),
+
                 SizedBox(
                   height: size.height * 0.02,
                 ),

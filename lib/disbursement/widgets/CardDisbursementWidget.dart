@@ -55,6 +55,7 @@ class CardDisbursementWidget extends StatelessWidget {
                   ],
                 ),
                 Container(
+                  padding: EdgeInsets.all(8),
                   height: size.height * 0.07,
                   width: size.width * 0.32,
                   decoration: BoxDecoration(
@@ -83,8 +84,8 @@ class CardDisbursementWidget extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            '$status',
-                            style: TextStyle(color: Colors.white, fontSize: 18),
+                            status,
+                            style: TextStyle(color: Colors.white, fontSize: 15),
                           ),
                         ],
                       ),
@@ -141,9 +142,12 @@ class CardDisbursementWidget extends StatelessWidget {
               height: size.height * 0.04,
               width: size.width * 0.98,
               color: Color.fromARGB(255, 221, 215, 215),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [Text('อ่านรายละเอียดเพิ่มเติม'), Icon(Icons.arrow_forward)],
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [Text('อ่านรายละเอียดเพิ่มเติม'), Icon(Icons.arrow_forward)],
+                ),
               ),
             ),
             SizedBox(

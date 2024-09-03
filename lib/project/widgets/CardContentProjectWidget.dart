@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:ncimobile/constants.dart';
+import 'package:ncimobile/project/projectDetailPage.dart';
 
 class CardContentProjectWidget extends StatelessWidget {
-  const CardContentProjectWidget({super.key, required this.size, required this.budget, required this.endDate, required this.projectID, required this.startDate, required this.status});
+  const CardContentProjectWidget(
+      {super.key, required this.size, required this.budget, required this.endDate, required this.projectID, required this.startDate, required this.status});
 
   final Size size;
   final String projectID;
@@ -93,13 +95,27 @@ class CardContentProjectWidget extends StatelessWidget {
                 ],
               ),
             ),
-            Container(
-              height: size.height * 0.04,
-              width: size.width * 0.90,
-              color: Color.fromARGB(255, 221, 215, 215),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [Text('อ่านรายละเอียดเพิ่มเติม'), Icon(Icons.arrow_forward)],
+            GestureDetector(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => ProjectDetailPage()));
+              },
+              child: Container(
+                height: size.height * 0.04,
+                width: size.width * 0.90,
+                color: Color.fromARGB(255, 221, 215, 215),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text('อ่านรายละเอียดเพิ่มเติม'),
+                      ),
+                      Icon(Icons.arrow_forward)
+                    ],
+                  ),
+                ),
               ),
             ),
           ],

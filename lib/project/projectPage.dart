@@ -14,6 +14,15 @@ class ProjectPage extends StatefulWidget {
 }
 
 class _ProjectPageState extends State<ProjectPage> {
+  int? title = 0;
+  List<Map<String, dynamic>> listPro = [];
+
+  @override
+  void initState() {
+    super.initState();
+    listPro = projects;
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -56,22 +65,49 @@ class _ProjectPageState extends State<ProjectPage> {
                           contentTitle.length,
                           (index) => Padding(
                                 padding: EdgeInsets.symmetric(horizontal: size.width * 0.01),
-                                child: ContentProjectWidget(
-                                  title: contentTitle[index],
-                                  press: (){
-                                    Navigator.push(context, MaterialPageRoute(builder: (context)=> ProjectDetailPage()));
+                                child: GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      title = index;
+                                    });
                                   },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: index == title ? kMainColor : Colors.white,
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(5.0),
+                                      ),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          offset: Offset(0, 0),
+                                          blurRadius: 0.2,
+                                          spreadRadius: 0.2,
+                                          color: Colors.black26,
+                                        ),
+                                      ],
+                                    ),
+                                    child: Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: Text(
+                                        contentTitle[index],
+                                        style: TextStyle(
+                                          color: index == title ? Colors.white : Colors.black,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               )),
                     ),
                   ),
+
                   SizedBox(
                     height: size.height * 0.02,
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: size.width * 0.04),
                     child: Text(
-                      'โครงการทั้งหมด (5)',
+                      'โครงการทั้งหมด (${projects.length})',
                       style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                     ),
                   ),
@@ -82,18 +118,20 @@ class _ProjectPageState extends State<ProjectPage> {
                     padding: EdgeInsets.symmetric(horizontal: size.width * 0.04),
                     child: Column(
                       children: List.generate(
-                        projects.length,
-                        (index) => Padding(
-                          padding: EdgeInsets.symmetric(vertical: size.height * 0.01),
-                          child: CardContentProjectWidget(
-                            size: size,
-                            budget: projects[index]['budget'],
-                            startDate: projects[index]['startDate'],
-                            status: projects[index]['status'],
-                            endDate: projects[index]['endDate'],
-                            projectID: projects[index]['projectID'],
-                          ),
-                        ),
+                        listPro.length,
+                        (index) {
+                          return Padding(
+                            padding: EdgeInsets.symmetric(vertical: size.height * 0.01),
+                            child: CardContentProjectWidget(
+                              size: size,
+                              budget: listPro[index]['budget'],
+                              startDate: listPro[index]['startDate'],
+                              status: listPro[index]['status'],
+                              endDate: listPro[index]['endDate'],
+                              projectID: listPro[index]['projectID'],
+                            ),
+                          );
+                        },
                       ),
                     ),
                   ),

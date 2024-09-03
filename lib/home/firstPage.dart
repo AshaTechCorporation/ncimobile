@@ -38,9 +38,7 @@ class _FirstPageState extends State<FirstPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         extendBody: true,
-        body: SafeArea(
-          child: PageStorage(bucket: bucket, child: currentPage),
-        ),
+        body: PageStorage(bucket: bucket, child: currentPage),
         bottomNavigationBar: BottomNavigationBar(
           showUnselectedLabels: true,
           selectedItemColor: Colors.red,
@@ -49,10 +47,12 @@ class _FirstPageState extends State<FirstPage> {
           currentIndex: selectedIndex,
           onTap: onItemSelect,
           items: [
-            BottomNavigationBarItem(icon: selectedIndex == 0 ? Image.asset('assets/icons/calendar_today_color.png') : Image.asset('assets/icons/calendar_today.png'), label: 'หน้าข่าวสาร'),
+            BottomNavigationBarItem(
+                icon: selectedIndex == 0 ? Image.asset('assets/icons/calendar_today_color.png') : Image.asset('assets/icons/calendar_today.png'), label: 'หน้าข่าวสาร'),
             BottomNavigationBarItem(icon: selectedIndex == 1 ? Image.asset('assets/icons/description_color.png') : Image.asset('assets/icons/description.png'), label: 'โครงการ'),
             BottomNavigationBarItem(icon: selectedIndex == 2 ? Image.asset('assets/icons/table_view_color.png') : Image.asset('assets/icons/table_view.png'), label: 'เบิก-จ่าย'),
-            BottomNavigationBarItem(icon: selectedIndex == 3 ? Image.asset('assets/icons/edit_calendar_color.png') : Image.asset('assets/icons/edit_calendar.png'), label: 'อนุมัติ'),
+            BottomNavigationBarItem(
+                icon: selectedIndex == 3 ? Image.asset('assets/icons/edit_calendar_color.png') : Image.asset('assets/icons/edit_calendar.png'), label: 'อนุมัติ'),
             BottomNavigationBarItem(icon: selectedIndex == 4 ? Image.asset('assets/icons/settings_color.png') : Image.asset('assets/icons/settings.png'), label: 'ตั้งค่า'),
           ],
         ));

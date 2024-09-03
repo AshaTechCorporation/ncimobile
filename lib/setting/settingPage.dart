@@ -24,25 +24,29 @@ class _SettingPageState extends State<SettingPage> {
             pressNoti: () {},
           ),
           Container(
+            padding: EdgeInsets.all(16),
             decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(35.0), topRight: Radius.circular(35.0))),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: EdgeInsets.all(20.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Icon(
-                        Icons.settings,
-                        size: 35,
-                      ),
-                      Text(
-                        "ตั้งค่าการใช้งาน",
-                        style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.black),
-                      ),
-                    ],
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Icon(
+                      Icons.settings_outlined,
+                      size: 35,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text(
+                      "ตั้งค่าการใช้งาน",
+                      style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.black),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 15,
                 ),
                 ////////////////////////
                 Row(
@@ -73,14 +77,26 @@ class _SettingPageState extends State<SettingPage> {
                       Row(
                         children: [Icon(Icons.person), Text('นางสาว สมศรี รักศึกษา')],
                       ),
+                      SizedBox(
+                        height: 10,
+                      ),
                       Row(
                         children: [Icon(Icons.email), Text('placeholder.mail@somemail.ac.th')],
+                      ),
+                      SizedBox(
+                        height: 10,
                       ),
                       Row(
                         children: [Icon(Icons.phone), Text('+66  1234567890')],
                       ),
+                      SizedBox(
+                        height: 10,
+                      ),
                       Row(
                         children: [Icon(Icons.file_copy), Text('แผนก ภาษาไทย')],
+                      ),
+                      SizedBox(
+                        height: 10,
                       ),
                     ],
                   ),

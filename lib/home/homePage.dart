@@ -1,4 +1,6 @@
+import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:ncimobile/constants.dart';
 import 'package:ncimobile/home/widgets/HeadderBarWidget.dart';
 import 'package:ncimobile/home/widgets/ListContentWidget.dart';
@@ -26,6 +28,42 @@ class _HomePageState extends State<HomePage> {
           ),
 
           //////////////////
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "ปฏิทินประจำสัปดาห์ ${DateFormat('dd MMMM y').format(DateTime.now())}",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16.0,
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                EasyDateTimeLine(
+                  initialDate: DateTime.now(),
+                  activeColor: Colors.black,
+                  timeLineProps: EasyTimeLineProps(hPadding: BorderSide.strokeAlignCenter),
+                  dayProps: EasyDayProps(
+                    dayStructure: DayStructure.dayStrDayNum,
+                    activeDayStyle: DayStyle(
+                      decoration: BoxDecoration(color: Colors.amber, borderRadius: BorderRadius.circular(10)),
+                    ),
+                  ),
+                  headerProps: EasyHeaderProps(showHeader: false),
+                  onDateChange: (selectedDate) {
+                    //`selectedDate` the new date selected.
+                  },
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+              ],
+            ),
+          ),
           Container(
               decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(35.0), topRight: Radius.circular(35.0))),
               child: Column(
@@ -59,5 +97,3 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-
-

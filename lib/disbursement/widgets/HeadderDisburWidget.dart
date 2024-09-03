@@ -10,6 +10,7 @@ class HeadderDisburWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.all(16),
       height: size.height * 0.12,
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(color: kMainColor),
@@ -25,6 +26,22 @@ class HeadderDisburWidget extends StatelessWidget {
                     children: [
                       CircleAvatar(
                         radius: 30,
+                        child: ClipOval(
+                          child: Container(
+                            height: 85,
+                            width: 85,
+                            decoration: BoxDecoration(
+                              color: Color.fromARGB(255, 56, 56, 56),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: Image.asset(
+                              'assets/images/Frame2.png',
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 15,
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,

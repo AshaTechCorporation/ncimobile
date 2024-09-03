@@ -11,7 +11,8 @@ class HeadderBarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: size.height * 0.25,
+      padding: EdgeInsets.all(16),
+      height: size.height * 0.12,
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(color: kMainColor),
       child: Column(
@@ -26,6 +27,22 @@ class HeadderBarWidget extends StatelessWidget {
                     children: [
                       CircleAvatar(
                         radius: 30,
+                        child: ClipOval(
+                          child: Container(
+                            height: 85,
+                            width: 85,
+                            decoration: BoxDecoration(
+                              color: Color.fromARGB(255, 56, 56, 56),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: Image.asset(
+                              'assets/images/Frame2.png',
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 15,
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -72,14 +89,6 @@ class HeadderBarWidget extends StatelessWidget {
                 ),
               ),
             ],
-          ),
-          SizedBox(height: 8.0),
-          Text(
-            "ปฏิทินประจำสัปดาห์ 4 มิถุนายน, 2024",
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 16.0,
-            ),
           ),
         ],
       ),
