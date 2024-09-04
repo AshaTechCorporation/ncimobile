@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ncimobile/approve/DetailApprove.dart';
 import 'package:ncimobile/constants.dart';
 
 class ProjectApproveWidget extends StatelessWidget {
@@ -31,9 +32,12 @@ class ProjectApproveWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text('25681010123'),
-          Text(
-            'โครงการฝึกอบรมนักเรียนต่างประเทศ',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          Padding(
+            padding: const EdgeInsets.all(8),
+            child: Text(
+              'โครงการฝึกอบรมนักเรียนต่างประเทศ',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
           ),
           Row(
             children: [
@@ -43,16 +47,25 @@ class ProjectApproveWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('วันที่เริ่มโครงการ : 10/10/2068'),
-                    Text('วันที่สิ้นสุดโครงการ : 10/10/2569'),
-                    Text('งบประมาณโครงการ : 10,000,000.00 บาท'),
+                    Text(
+                      'วันที่เริ่มโครงการ : 10/10/2068',
+                      style: TextStyle(fontSize: 12),
+                    ),
+                    Text(
+                      'วันที่สิ้นสุดโครงการ : 10/10/2569',
+                      style: TextStyle(fontSize: 12),
+                    ),
+                    Text(
+                      'งบประมาณโครงการ : 10,000,000.00 บาท',
+                      style: TextStyle(fontSize: 12),
+                    ),
                   ],
                 ),
               ),
               Expanded(
                 flex: 4,
                 child: Container(
-                  height: size.height * 0.08,
+                  height: size.height * 0.07,
                   width: size.width * 0.06,
                   decoration: BoxDecoration(
                     color: kCardWaitColor,
@@ -71,11 +84,10 @@ class ProjectApproveWidget extends StatelessWidget {
                           style: TextStyle(color: Colors.white),
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
+                      Center(
                         child: Text(
                           'กำลังตรวจสอบ',
-                          style: TextStyle(color: Colors.white, fontSize: 16),
+                          style: TextStyle(color: Colors.white, fontSize: 14),
                         ),
                       )
                     ],
@@ -86,13 +98,21 @@ class ProjectApproveWidget extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.symmetric(vertical: size.height * 0.01),
-            child: Container(
-              height: size.height * 0.04,
-              width: size.width * 0.98,
-              color: Color.fromARGB(255, 221, 215, 215),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [Text('อ่านรายละเอียดเพิ่มเติม'), Icon(Icons.arrow_forward)],
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => DetailApprove()));
+              },
+              child: Container(
+                height: size.height * 0.04,
+                width: size.width * 0.98,
+                color: Color.fromARGB(255, 221, 215, 215),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [Text('อ่านรายละเอียดเพิ่มเติม'), Icon(Icons.arrow_forward)],
+                  ),
+                ),
               ),
             ),
           ),

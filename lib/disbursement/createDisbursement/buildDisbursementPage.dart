@@ -1,6 +1,7 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:ncimobile/constants.dart';
+import 'package:ncimobile/home/firstPage.dart';
 import 'package:ncimobile/widgets/input.dart';
 
 class BuildDisbursementPage extends StatefulWidget {
@@ -183,20 +184,25 @@ class _BuildDisbursementPageState extends State<BuildDisbursementPage> {
                                     SizedBox(
                                       height: size.height * 0.08,
                                     ),
-                                    Container(
-                                      padding: EdgeInsets.all(8),
-                                      height: size.height * 0.05,
-                                      width: double.infinity,
-                                      decoration: BoxDecoration(
-                                        color: kMainColor,
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(5.0),
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.all(8),
+                                        height: size.height * 0.05,
+                                        width: double.infinity,
+                                        decoration: BoxDecoration(
+                                          color: kMainColor,
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(5.0),
+                                          ),
                                         ),
-                                      ),
-                                      child: Center(
-                                        child: Text(
-                                          'เพิ่มรายการ',
-                                          style: TextStyle(color: Colors.white),
+                                        child: Center(
+                                          child: Text(
+                                            'เพิ่มรายการ',
+                                            style: TextStyle(color: Colors.white),
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -295,6 +301,31 @@ class _BuildDisbursementPageState extends State<BuildDisbursementPage> {
                                     InputTextFormField(
                                       width: double.infinity,
                                       hintText: 'จำนวนรายการ',
+                                    ),
+                                    SizedBox(
+                                      height: size.height * 0.08,
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.all(8),
+                                        height: size.height * 0.05,
+                                        width: double.infinity,
+                                        decoration: BoxDecoration(
+                                          color: kMainColor,
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(5.0),
+                                          ),
+                                        ),
+                                        child: Center(
+                                          child: Text(
+                                            'เพิ่มรายการ',
+                                            style: TextStyle(color: Colors.white),
+                                          ),
+                                        ),
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -397,20 +428,59 @@ class _BuildDisbursementPageState extends State<BuildDisbursementPage> {
                   ),
                 ),
               ),
-              Container(
-                padding: EdgeInsets.all(8),
-                height: size.height * 0.05,
-                width: size.width * 0.45,
-                decoration: BoxDecoration(
-                  color: kCardWaitColor,
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(5.0),
+              GestureDetector(
+                onTap: () {
+                  showDialog(
+                      barrierDismissible: false,
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Text(
+                            'ยืนยันในตั้งเบิกรายการใหม่ ใช่ไหม?',
+                            style: TextStyle(fontSize: 15),
+                          ),
+                          content: Text(
+                            'ผู้เขียนรายการเบิกจะต้องตรวจสอบและแก้ไขรายการเบิกให้ถูกต้อง เพื่อให้สามารถยื่นขออนุมัติใหม่ได้อย่างเหมาะสมและมีโอกาสมากขึ้นในการได้รับการอนุมัติ',
+                            style: TextStyle(fontSize: 12),
+                          ),
+                          actions: [
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                              child: Text('ยกเลิก'),
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: ((context) => FirstPage())), (route) => false);
+                              },
+                              child: Text(
+                                'ตั้งรายการเบิก',
+                                style: TextStyle(color: Colors.amber),
+                              ),
+                            ),
+                          ],
+                        );
+                      });
+                },
+                child: Container(
+                  padding: EdgeInsets.all(8),
+                  height: size.height * 0.05,
+                  width: size.width * 0.45,
+                  decoration: BoxDecoration(
+                    color: kCardWaitColor,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(5.0),
+                    ),
                   ),
-                ),
-                child: Center(
-                  child: Text(
-                    'ตั้งรายการเบิก',
-                    style: TextStyle(color: Colors.black),
+                  child: Center(
+                    child: Text(
+                      'ตั้งรายการเบิก',
+                      style: TextStyle(color: Colors.black),
+                    ),
                   ),
                 ),
               ),

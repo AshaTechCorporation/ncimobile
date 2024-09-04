@@ -45,7 +45,6 @@ class _ApprovePageState extends State<ApprovePage> {
                     ],
                   ),
                 ),
-                
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: size.width * 0.04),
                   child: Text(
@@ -93,5 +92,3 @@ class _ApprovePageState extends State<ApprovePage> {
     );
   }
 }
-
-
