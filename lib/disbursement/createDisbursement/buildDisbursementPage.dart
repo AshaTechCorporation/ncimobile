@@ -191,6 +191,7 @@ class _BuildDisbursementPageState extends State<BuildDisbursementPage> {
                                       InputTextFormField(
                                         controller: subTitle,
                                         width: double.infinity,
+                                        keyboardType: TextInputType.number,
                                         hintText: 'ราคาต่อหน่อย (บาท)',
                                       ),
                                       Text(
@@ -205,6 +206,7 @@ class _BuildDisbursementPageState extends State<BuildDisbursementPage> {
                                       InputTextFormField(
                                         controller: qty,
                                         width: double.infinity,
+                                        keyboardType: TextInputType.number,
                                         hintText: 'จำนวนรายการ',
                                       ),
                                       SizedBox(
@@ -297,7 +299,7 @@ class _BuildDisbursementPageState extends State<BuildDisbursementPage> {
                                                     listDisbur[index].title,
                                                   ),
                                                   Text(
-                                                    '${listDisbur[index].subTitle} บาท',
+                                                    '${NumberFormat('#,##0', 'en_US').format(listDisbur[index].subTitle)} บาท',
                                                   ),
                                                 ],
                                               ),
@@ -327,7 +329,7 @@ class _BuildDisbursementPageState extends State<BuildDisbursementPage> {
                                                     width: 20,
                                                   ),
                                                   Text(
-                                                    '${listDisbur[index].qty}',
+                                                    NumberFormat('#,##0', 'en_US').format(listDisbur[index].qty),
                                                   ),
                                                   SizedBox(
                                                     width: 20,

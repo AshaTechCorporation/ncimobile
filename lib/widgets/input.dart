@@ -10,6 +10,7 @@ class InputTextFormField extends StatefulWidget {
     this.prefixIcon,
     this.obscureText,
     this.suffixIcon,
+    this.keyboardType,
   });
 
   double? width;
@@ -19,6 +20,7 @@ class InputTextFormField extends StatefulWidget {
   Widget? prefixIcon;
   bool? obscureText;
   Widget? suffixIcon;
+  TextInputType? keyboardType;
 
   @override
   State<InputTextFormField> createState() => _InputTextFormFieldState();
@@ -35,6 +37,7 @@ class _InputTextFormFieldState extends State<InputTextFormField> {
           // onTap: () async {},
           style: TextStyle(fontSize: 22),
           obscureText: widget.obscureText ?? false,
+          keyboardType: widget.keyboardType,
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
             hintText: widget.hintText,
