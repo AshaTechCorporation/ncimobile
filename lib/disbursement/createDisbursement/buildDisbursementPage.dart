@@ -1,5 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
+import 'package:flutter/cupertino.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:path/path.dart' as path;
 
@@ -40,15 +42,64 @@ class _BuildDisbursementPageState extends State<BuildDisbursementPage> {
     'เบี้ยเลี้ยง บุคลากรภายนอก',
   ];
   void openFilePicker() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+        // type: FileType.custom,
+        // allowedExtensions: ['jpg', 'pdf', 'doc', 'docx', 'xlsx'],
+        );
 
     if (result != null) {
       PlatformFile file3 = result.files.first;
       final File file2 = File(file3.path!);
+      inspect(file2);
       setState(() {
         files.add(file2);
       });
     }
+  }
+
+  Future<void> openDialogImage() async {
+    await showModalBottomSheet(
+        context: context,
+        builder: (context) => CupertinoActionSheet(
+              actions: [
+                CupertinoActionSheetAction(
+                  onPressed: () async {
+                    Navigator.pop(context);
+                    openFilePicker();
+                  },
+                  child: Text(
+                    'เลือกข้อมูลจากไฟล์',
+                    style: TextStyle(fontSize: 25, color: Colors.grey),
+                  ),
+                ),
+                CupertinoActionSheetAction(
+                  onPressed: () async {
+                    final picker = ImagePicker();
+                    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+                    if (pickedFile != null) {
+                      final File file = File(pickedFile.path);
+                      setState(() {
+                        files.add(file);
+                      });
+                    }
+                    Navigator.pop(context);
+                  },
+                  child: Text(
+                    'เลือกรูปจากอัลบั้ม',
+                    style: TextStyle(fontSize: 25, color: Colors.grey),
+                  ),
+                ),
+              ],
+              cancelButton: TextButton(
+                onPressed: () {
+                  Navigator.pop(context, 'cancel');
+                },
+                child: Text(
+                  'ยกเลิก',
+                  style: TextStyle(fontSize: 25, color: Colors.grey),
+                ),
+              ),
+            ));
   }
 
   @override
@@ -427,7 +478,7 @@ class _BuildDisbursementPageState extends State<BuildDisbursementPage> {
                   ),
                   GestureDetector(
                       onTap: () async {
-                        openFilePicker();
+                        openDialogImage();
                       },
                       child: Icon(Icons.add_circle_outline)),
                 ],
@@ -460,7 +511,7 @@ class _BuildDisbursementPageState extends State<BuildDisbursementPage> {
                                   width: size.width * 0.75,
                                   child: Text(
                                     fileNameFromPath,
-                                    maxLines: 1,
+                                    maxLines: 2,
                                   ),
                                 ),
                                 GestureDetector(

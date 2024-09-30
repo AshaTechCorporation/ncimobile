@@ -46,16 +46,40 @@ class _HomePageState extends State<HomePage> {
                 EasyDateTimeLine(
                   initialDate: DateTime.now(),
                   activeColor: Colors.black,
-                  timeLineProps: EasyTimeLineProps(hPadding: BorderSide.strokeAlignCenter),
+                  timeLineProps: EasyTimeLineProps(
+                    hPadding: BorderSide.strokeAlignCenter,
+                  ),
                   dayProps: EasyDayProps(
+                    todayHighlightColor: Colors.transparent,
                     dayStructure: DayStructure.dayStrDayNum,
+                    // width: 64.0,
+                    height: 80,
                     activeDayStyle: DayStyle(
-                      decoration: BoxDecoration(color: Colors.amber, borderRadius: BorderRadius.circular(10)),
+                      decoration: BoxDecoration(
+                        // border: Border.all(color: Colors.blue),
+                        borderRadius: BorderRadius.circular(10),
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Color.fromARGB(255, 255, 241, 51),
+                            Colors.amber,
+                            Color.fromARGB(255, 255, 241, 51),
+                          ],
+                        ),
+                      ),
+                    ),
+                    inactiveDayStyle: DayStyle(
+                      decoration: BoxDecoration(
+                        color: Colors.transparent, // สีพื้นหลังของวันที่ไม่ได้เลือก
+                        border: Border.all(style: BorderStyle.none), // เอากรอบออก
+                      ),
                     ),
                   ),
-                  headerProps: EasyHeaderProps(showHeader: false),
+                  headerProps: EasyHeaderProps(showHeader: false, monthPickerType: MonthPickerType.switcher),
                   onDateChange: (selectedDate) {
                     //`selectedDate` the new date selected.
+                    print(selectedDate);
                   },
                 ),
                 SizedBox(
