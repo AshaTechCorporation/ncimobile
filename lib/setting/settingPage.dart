@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:ncimobile/Dialog.dart';
+import 'package:ncimobile/LoadingDialog.dart';
 import 'package:ncimobile/constants.dart';
+import 'package:ncimobile/login/loginPage.dart';
 import 'package:ncimobile/project/widgets/HeadderProjectWidget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingPage extends StatefulWidget {
   const SettingPage({super.key});
@@ -146,6 +150,45 @@ class _SettingPageState extends State<SettingPage> {
                 Divider(
                   thickness: 2,
                 ),
+                GestureDetector(
+                  onTap: () async {
+                    final out = await showDialog(
+                      context: context,
+                      builder: (context) => AlertDialogYesNo(
+                        title: 'แจ้งเตือน',
+                        description: 'ต้องการยืนยันที่จะออกจากระบบ',
+                        pressYes: () {
+                          Navigator.pop(context, true);
+                        },
+                        pressNo: () {
+                          Navigator.pop(context, false);
+                        },
+                      ),
+                    );
+                    if (out == true) {
+                      LoadingDialog.open(context);
+                      clearToken();
+                      if (!mounted) return;
+                      LoadingDialog.close(context);
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+                        return Loginpage();
+                      }));
+                    }
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "ออกจากระบบ",
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
+                      ),
+                      Icon(Icons.arrow_forward_ios),
+                    ],
+                  ),
+                ),
+                Divider(
+                  thickness: 2,
+                ),
                 SizedBox(
                   height: size.height * 0.50,
                 ),
@@ -155,5 +198,11 @@ class _SettingPageState extends State<SettingPage> {
         ],
       ),
     );
+  }
+
+  Future<void> clearToken() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    // String? deviceName = pref.getString('device_name');
+    await pref.clear();
   }
 }

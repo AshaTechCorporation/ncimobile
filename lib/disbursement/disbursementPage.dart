@@ -108,44 +108,47 @@ class _DisbursementPageState extends State<DisbursementPage> {
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: size.width * 0.04),
-                  child: Row(
-                    children: List.generate(
-                        contentTitle.length,
-                        (index) => Padding(
-                              padding: EdgeInsets.symmetric(horizontal: size.width * 0.01),
-                              child: GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    title = index;
-                                  });
-                                },
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: index == title ? kMainColor : Colors.white,
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(5.0),
-                                    ),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        offset: Offset(0, 0),
-                                        blurRadius: 0.2,
-                                        spreadRadius: 0.2,
-                                        color: Colors.black26,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: List.generate(
+                          contentTitle.length,
+                          (index) => Padding(
+                                padding: EdgeInsets.symmetric(horizontal: size.width * 0.01),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      title = index;
+                                    });
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: index == title ? kMainColor : Colors.white,
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(5.0),
                                       ),
-                                    ],
-                                  ),
-                                  child: Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Text(
-                                      contentTitle[index],
-                                      style: TextStyle(
-                                        color: index == title ? Colors.white : Colors.black,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          offset: Offset(0, 0),
+                                          blurRadius: 0.2,
+                                          spreadRadius: 0.2,
+                                          color: Colors.black26,
+                                        ),
+                                      ],
+                                    ),
+                                    child: Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: Text(
+                                        contentTitle[index],
+                                        style: TextStyle(
+                                          color: index == title ? Colors.white : Colors.black,
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
-                              ),
-                            )),
+                              )),
+                    ),
                   ),
                 ),
 

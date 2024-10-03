@@ -496,6 +496,8 @@ class _BuildDisbursementPageState extends State<BuildDisbursementPage> {
                         files.length,
                         (index) {
                           String fileNameFromPath = path.basename(files[index].path);
+                          String extension = path.extension(files[index].path);
+                          print(extension);
                           return Container(
                             margin: EdgeInsets.all(8),
                             width: double.infinity,
@@ -507,8 +509,14 @@ class _BuildDisbursementPageState extends State<BuildDisbursementPage> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
+                                extension == '.jpg' || extension == '.png' || extension == '.gif'
+                                    ? Image.asset('assets/icons/photo.png')
+                                    : Image.asset('assets/icons/picture_as_pdf.png'),
                                 SizedBox(
-                                  width: size.width * 0.75,
+                                  width: 10,
+                                ),
+                                SizedBox(
+                                  width: size.width * 0.70,
                                   child: Text(
                                     fileNameFromPath,
                                     maxLines: 2,

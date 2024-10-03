@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+const String publicUrl = 'nci.dev-asha.com';
+
 const kBackgroundColor = Color(0xff1B58B1);
 const kSecondTextColor = Color(0xff7B7B7B);
 const kConkgroundColor = Color(0xffFFFFFF);
@@ -7,6 +9,21 @@ const kConkgroundColor = Color(0xffFFFFFF);
 const kMainColor = Color(0xffFF93CE);
 const kCardWaitColor = Color(0xffF6B220);
 const kCardApproveColor = Color(0xff38CC85);
+const kBlueO = Color.fromARGB(255, 147, 206, 255);
+const kOrangeS = Color.fromARGB(255, 246, 182, 32);
+const kgreenM = Color.fromARGB(255, 56, 204, 66);
+const kpink = Color.fromARGB(255, 255, 147, 230);
+const kCran = Color.fromARGB(255, 32, 246, 221);
+const kGreenA = Color.fromARGB(255, 184, 204, 56);
+const kOrangeA = Color.fromARGB(255, 255, 206, 147);
+const kOrange = Color.fromARGB(255, 246, 100, 32);
+const kPupueG = Color.fromARGB(255, 123, 56, 204);
+const kPupue = Color.fromARGB(255, 188, 147, 255);
+const kGreen = Color.fromARGB(255, 123, 152, 17);
+const kBlueW = Color.fromARGB(255, 56, 204, 202);
+const kRedR = Color.fromARGB(255, 255, 147, 147);
+const kBlue = Color.fromARGB(255, 32, 32, 246);
+const kRed = Color.fromARGB(255, 204, 56, 56);
 
 const List<Map<String, dynamic>> news = [
   {
@@ -35,7 +52,25 @@ const List<Map<String, dynamic>> news = [
   }
 ];
 
-const List<String> contentTitle = ['ทั้งหมด', 'รอดำเนินการ', 'กำลังตรวจสอบ', 'อนุมัติ'];
+const List<String> contentTitle = [
+  'ทั้งหมด',
+  'หัวหน้ากง.ตรวจสอบ',
+  'รอแผนตรวจสอบ',
+  'รอหัวหน้าแผนตรวจสอบ',
+  'นำเสนออนุมัติ/กรม',
+  'กรมอนุมัติ',
+  'อนมุติโครงการไปยังแผน',
+  'รอแผนอนุมัติโครงการ',
+  'แผนอนุมัติโครงการแล้ว',
+  'การเงินอนุมัติโครงการแล้ว',
+  'อนุมัติโครงการไปยังผู้บริหาร',
+  'โครงการอนุมัติแล้ว',
+  'ขออนุมัติจัดโครงการ',
+  'อนุมัติจัดโครงการ',
+  'กำลังดำเนินการ',
+  'ขออนุมัติปิดโครงการ',
+  'ปิดโครงการแล้ว',
+];
 const List<String> contentDisbur = ['ทั้งหมด', 'รอดำเนินการ', 'กำลังตรวจสอบ', 'อนุมัติ'];
 
 const List<Map<String, dynamic>> projects = [
