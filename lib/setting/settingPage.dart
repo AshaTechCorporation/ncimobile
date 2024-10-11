@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:ncimobile/Dialog.dart';
 import 'package:ncimobile/LoadingDialog.dart';
 import 'package:ncimobile/constants.dart';
+import 'package:ncimobile/home/editPassword.dart';
+import 'package:ncimobile/home/editProfile.dart';
 import 'package:ncimobile/login/loginPage.dart';
 import 'package:ncimobile/project/widgets/HeadderProjectWidget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -60,14 +62,19 @@ class _SettingPageState extends State<SettingPage> {
                       "ข้อมูลส่วนบุคคล",
                       style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
                     ),
-                    Row(
-                      children: [
-                        Text(
-                          'แก้ไข',
-                          style: TextStyle(fontSize: 16),
-                        ),
-                        Icon(Icons.arrow_forward_ios)
-                      ],
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => EditProfile()));
+                      },
+                      child: Row(
+                        children: [
+                          Text(
+                            'แก้ไข',
+                            style: TextStyle(fontSize: 16),
+                          ),
+                          Icon(Icons.arrow_forward_ios)
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -105,23 +112,28 @@ class _SettingPageState extends State<SettingPage> {
                     ],
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "รหัสผ่าน",
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          'แก้ไข',
-                          style: TextStyle(fontSize: 16),
-                        ),
-                        Icon(Icons.arrow_forward_ios)
-                      ],
-                    ),
-                  ],
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => EditPassword()));
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "รหัสผ่าน",
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            'แก้ไข',
+                            style: TextStyle(fontSize: 16),
+                          ),
+                          Icon(Icons.arrow_forward_ios)
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
                 Divider(
                   thickness: 2,

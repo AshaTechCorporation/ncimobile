@@ -24,6 +24,8 @@ const kBlueW = Color.fromARGB(255, 56, 204, 202);
 const kRedR = Color.fromARGB(255, 255, 147, 147);
 const kBlue = Color.fromARGB(255, 32, 32, 246);
 const kRed = Color.fromARGB(255, 204, 56, 56);
+const KFillColor = Color(0xffF3F3F3);
+const kBackground2Color = Color(0xff2F1947);
 
 const List<Map<String, dynamic>> news = [
   {
