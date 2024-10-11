@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ncimobile/chat/chatapp.dart';
 import 'package:ncimobile/constants.dart';
 
 class HeadderProjectWidget extends StatelessWidget {
@@ -73,7 +74,9 @@ class HeadderProjectWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => ChatScreen()));
+                        },
                         icon: Icon(
                           Icons.chat,
                           color: Colors.white,
