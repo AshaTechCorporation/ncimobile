@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ncimobile/approve/approvePage.dart';
 import 'package:ncimobile/disbursement/disbursementPage.dart';
 import 'package:ncimobile/home/homePage.dart';
+import 'package:ncimobile/listProduct/listProducrPage.dart';
 import 'package:ncimobile/project/projectPage.dart';
 import 'package:ncimobile/setting/settingPage.dart';
 
@@ -29,6 +30,8 @@ class _FirstPageState extends State<FirstPage> {
       } else if (selectedIndex == 3) {
         currentPage = ApprovePage();
       } else if (selectedIndex == 4) {
+        currentPage = ListProducrPage();
+      } else if (selectedIndex == 5) {
         currentPage = SettingPage();
       }
     });
@@ -53,7 +56,8 @@ class _FirstPageState extends State<FirstPage> {
             BottomNavigationBarItem(icon: selectedIndex == 2 ? Image.asset('assets/icons/table_view_color.png') : Image.asset('assets/icons/table_view.png'), label: 'เบิก-จ่าย'),
             BottomNavigationBarItem(
                 icon: selectedIndex == 3 ? Image.asset('assets/icons/edit_calendar_color.png') : Image.asset('assets/icons/edit_calendar.png'), label: 'อนุมัติ'),
-            BottomNavigationBarItem(icon: selectedIndex == 4 ? Image.asset('assets/icons/settings_color.png') : Image.asset('assets/icons/settings.png'), label: 'ตั้งค่า'),
+            BottomNavigationBarItem(icon: selectedIndex == 4 ? Image.asset('assets/icons/description_color.png') : Image.asset('assets/icons/description.png'), label: 'รายการ'),
+            BottomNavigationBarItem(icon: selectedIndex == 5 ? Image.asset('assets/icons/settings_color.png') : Image.asset('assets/icons/settings.png'), label: 'ตั้งค่า'),
           ],
         ));
   }
