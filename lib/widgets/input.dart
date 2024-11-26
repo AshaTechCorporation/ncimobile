@@ -31,13 +31,14 @@ class _InputTextFormFieldState extends State<InputTextFormField> {
   Widget build(BuildContext context) {
     return SizedBox(
         width: widget.width ?? 250,
-        height: widget.height ?? 60,
+        // height: widget.height ?? 60,
         child: TextFormField(
           controller: widget.controller,
           // onTap: () async {},
           style: TextStyle(fontSize: 22),
           obscureText: widget.obscureText ?? false,
           keyboardType: widget.keyboardType,
+          maxLines: widget.keyboardType == TextInputType.text ? 5 : 1,
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
             hintText: widget.hintText,

@@ -17,7 +17,11 @@ class LoginService {
     });
     if (response.statusCode == 200) {
       final data = convert.jsonDecode(response.body);
-      return data['token'];
+      final dataOut = {
+        "token": data['token'],
+        "userId": data['data']['id'],
+      };
+      return dataOut;
     } else {
       final data = convert.jsonDecode(response.body);
       throw ApiException(data['message']);

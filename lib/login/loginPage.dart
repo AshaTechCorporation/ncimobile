@@ -83,7 +83,8 @@ class _LoginpageState extends State<Loginpage> {
                     final login = await LoginService.login(email.text, password.text);
                     final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
                     final SharedPreferences prefs = await _prefs;
-                    await prefs.setString('token', login);
+                    await prefs.setString('token', login['token']);
+                    await prefs.setInt('userId', login['userId']);
                     if (!mounted) return;
                     LoadingDialog.close(context);
                     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {

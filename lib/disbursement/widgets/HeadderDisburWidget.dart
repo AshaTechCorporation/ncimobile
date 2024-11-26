@@ -11,7 +11,7 @@ class HeadderDisburWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(16),
-      height: size.height * 0.12,
+      height: size.height * 0.14,
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(color: kMainColor),
       child: Column(

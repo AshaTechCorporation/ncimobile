@@ -107,7 +107,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         Text(
                           "ประกาศจากฝ่ายการเงิน",
-                          style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.black),
+                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
                         ),
                       ],
                     ),

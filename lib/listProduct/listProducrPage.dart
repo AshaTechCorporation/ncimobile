@@ -1,7 +1,10 @@
+import 'dart:developer';
+
+import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:flutter/material.dart';
 import 'package:ncimobile/constants.dart';
 import 'package:ncimobile/disbursement/widgets/HeadderDisburWidget.dart';
-import 'package:simple_barcode_scanner/simple_barcode_scanner.dart';
+import 'package:ncimobile/listProduct/addItem/addItemPage.dart';
 
 class ListProducrPage extends StatefulWidget {
   const ListProducrPage({super.key});
@@ -11,6 +14,7 @@ class ListProducrPage extends StatefulWidget {
 }
 
 class _ListProducrPageState extends State<ListProducrPage> {
+  var options = ScanOptions();
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -32,11 +36,22 @@ class _ListProducrPageState extends State<ListProducrPage> {
                 Padding(
                   padding: EdgeInsets.all(20.0),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         "รายการ",
                         style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.black),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) {
+                            return AddItemPage();
+                          }));
+                        },
+                        child: Icon(
+                          Icons.add_circle_outline_outlined,
+                          color: Colors.black,
+                        ),
                       ),
                     ],
                   ),
@@ -54,16 +69,8 @@ class _ListProducrPageState extends State<ListProducrPage> {
                       prefixIcon: Icon(Icons.search),
                       suffixIcon: GestureDetector(
                         onTap: () async {
-                          var res = await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const SimpleBarcodeScannerPage(),
-                              ));
-                          setState(() {
-                            if (res is String) {
-                              // result = res;
-                            }
-                          });
+                          var result = await BarcodeScanner.scan(options: options);
+                          inspect(result);
                         },
                         child: Icon(
                           Icons.document_scanner_outlined,
@@ -92,7 +99,7 @@ class _ListProducrPageState extends State<ListProducrPage> {
                             ),
                             child: ListTile(
                               leading: Image.asset('assets/images/Frame1.png'),
-                              title: Text('สินค้า'),
+                              title: Text('รายการที่ ${index + 1}'),
                               subtitle: Text('รายละเอียด'),
                               trailing: Icon(
                                 Icons.arrow_forward_ios_sharp,
