@@ -13,7 +13,9 @@ Employee _$EmployeeFromJson(Map<String, dynamic> json) => Employee(
       lname: json['lname'] as String?,
       fname_en: json['fname_en'] as String?,
       lname_en: json['lname_en'] as String?,
-      birthday: json['birthday'] == null ? null : DateTime.parse(json['birthday'] as String),
+      birthday: json['birthday'] == null
+          ? null
+          : DateTime.parse(json['birthday'] as String),
       line: json['line'] as String?,
       email: json['email'] as String?,
       tel: json['tel'] as String?,
@@ -44,8 +46,10 @@ Employee _$EmployeeFromJson(Map<String, dynamic> json) => Employee(
       movement_type_id: (json['movement_type_id'] as num?)?.toInt(),
       qualification_id: (json['qualification_id'] as num?)?.toInt(),
       education_id: (json['education_id'] as num?)?.toInt(),
-      special_government_type_id: (json['special_government_type_id'] as num?)?.toInt(),
-      special_government_project_id: (json['special_government_project_id'] as num?)?.toInt(),
+      special_government_type_id:
+          (json['special_government_type_id'] as num?)?.toInt(),
+      special_government_project_id:
+          (json['special_government_project_id'] as num?)?.toInt(),
       ci_mission_id: (json['ci_mission_id'] as num?)?.toInt(),
       ci_department_id: (json['ci_department_id'] as num?)?.toInt(),
       ci_work_id: (json['ci_work_id'] as num?)?.toInt(),
@@ -54,19 +58,29 @@ Employee _$EmployeeFromJson(Map<String, dynamic> json) => Employee(
       md_department_id: (json['md_department_id'] as num?)?.toInt(),
       md_work_id: (json['md_work_id'] as num?)?.toInt(),
       md_unit_id: (json['md_unit_id'] as num?)?.toInt(),
-      goverment_reg_date: json['goverment_reg_date'] == null ? null : DateTime.parse(json['goverment_reg_date'] as String),
-      probation_pass_date: json['probation_pass_date'] == null ? null : DateTime.parse(json['probation_pass_date'] as String),
+      goverment_reg_date: json['goverment_reg_date'] == null
+          ? null
+          : DateTime.parse(json['goverment_reg_date'] as String),
+      probation_pass_date: json['probation_pass_date'] == null
+          ? null
+          : DateTime.parse(json['probation_pass_date'] as String),
       create_by: json['create_by'] as String?,
       update_by: json['update_by'] as String?,
-      created_at: json['created_at'] == null ? null : DateTime.parse(json['created_at'] as String),
-      updated_at: json['updated_at'] == null ? null : DateTime.parse(json['updated_at'] as String),
+      created_at: json['created_at'] == null
+          ? null
+          : DateTime.parse(json['created_at'] as String),
+      updated_at: json['updated_at'] == null
+          ? null
+          : DateTime.parse(json['updated_at'] as String),
       citizen_province_id: (json['citizen_province_id'] as num?)?.toInt(),
       citizen_amphure_id: (json['citizen_amphure_id'] as num?)?.toInt(),
       citizen_tambon_id: (json['citizen_tambon_id'] as num?)?.toInt(),
       current_province_id: (json['current_province_id'] as num?)?.toInt(),
       current_amphure_id: (json['current_amphure_id'] as num?)?.toInt(),
       current_tambon_id: (json['current_tambon_id'] as num?)?.toInt(),
-      register_date: json['register_date'] == null ? null : DateTime.parse(json['register_date'] as String),
+      register_date: json['register_date'] == null
+          ? null
+          : DateTime.parse(json['register_date'] as String),
       citizen_road: json['citizen_road'] as String?,
       citizen_alley: json['citizen_alley'] as String?,
       current_road: json['current_road'] as String?,
@@ -77,14 +91,22 @@ Employee _$EmployeeFromJson(Map<String, dynamic> json) => Employee(
       goverment_status: json['goverment_status'] as String?,
       side_id: (json['side_id'] as num?)?.toInt(),
       course_balance: json['course_balance'] as String?,
-      date_notify_position_advance: json['date_notify_position_advance'] == null ? null : DateTime.parse(json['date_notify_position_advance'] as String),
-      hr_group_work_education_id: (json['hr_group_work_education_id'] as num?)?.toInt(),
-      detail_notify_position_advance: json['detail_notify_position_advance'] as String?,
+      date_notify_position_advance: json['date_notify_position_advance'] == null
+          ? null
+          : DateTime.parse(json['date_notify_position_advance'] as String),
+      hr_group_work_education_id:
+          (json['hr_group_work_education_id'] as num?)?.toInt(),
+      detail_notify_position_advance:
+          json['detail_notify_position_advance'] as String?,
       finger_scan_no_old: json['finger_scan_no_old'] as String?,
       hr_work_shift_type_id: (json['hr_work_shift_type_id'] as num?)?.toInt(),
       seq_ward: (json['seq_ward'] as num?)?.toInt(),
-      resignation_date: json['resignation_date'] == null ? null : DateTime.parse(json['resignation_date'] as String),
-      comeback_date: json['comeback_date'] == null ? null : DateTime.parse(json['comeback_date'] as String),
+      resignation_date: json['resignation_date'] == null
+          ? null
+          : DateTime.parse(json['resignation_date'] as String),
+      comeback_date: json['comeback_date'] == null
+          ? null
+          : DateTime.parse(json['comeback_date'] as String),
       move_status: json['move_status'] as String?,
       father_fname: json['father_fname'] as String?,
       father_lname: json['father_lname'] as String?,
@@ -98,19 +120,45 @@ Employee _$EmployeeFromJson(Map<String, dynamic> json) => Employee(
       pvd_status: json['pvd_status'] as bool?,
       payroll_status: json['payroll_status'] as bool?,
       agency: json['agency'] as String?,
-      prefix: json['prefix'] == null ? null : Prefix.fromJson(json['prefix'] as Map<String, dynamic>),
-      employee_type: json['employee_type'] == null ? null : CodeName.fromJson(json['employee_type'] as Map<String, dynamic>),
-      position_type: json['position_type'] == null ? null : CodeName.fromJson(json['position_type'] as Map<String, dynamic>),
-      position_level: json['position_level'] == null ? null : CodeName.fromJson(json['position_level'] as Map<String, dynamic>),
-      position: json['position'] == null ? null : CodeName.fromJson(json['position'] as Map<String, dynamic>),
-      ci_mission: json['ci_mission'] == null ? null : CodeName.fromJson(json['ci_mission'] as Map<String, dynamic>),
-      ci_department: json['ci_department'] == null ? null : CodeName.fromJson(json['ci_department'] as Map<String, dynamic>),
-      ci_work: json['ci_work'] == null ? null : CodeName.fromJson(json['ci_work'] as Map<String, dynamic>),
-      ci_unit: json['ci_unit'] == null ? null : CodeName.fromJson(json['ci_unit'] as Map<String, dynamic>),
-      md_mission: json['md_mission'] == null ? null : CodeName.fromJson(json['md_mission'] as Map<String, dynamic>),
-      md_department: json['md_department'] == null ? null : CodeName.fromJson(json['md_department'] as Map<String, dynamic>),
-      md_work: json['md_work'] == null ? null : CodeName.fromJson(json['md_work'] as Map<String, dynamic>),
-      md_unit: json['md_unit'] == null ? null : CodeName.fromJson(json['md_unit'] as Map<String, dynamic>),
+      prefix: json['prefix'] == null
+          ? null
+          : Prefix.fromJson(json['prefix'] as Map<String, dynamic>),
+      employee_type: json['employee_type'] == null
+          ? null
+          : CodeName.fromJson(json['employee_type'] as Map<String, dynamic>),
+      position_type: json['position_type'] == null
+          ? null
+          : CodeName.fromJson(json['position_type'] as Map<String, dynamic>),
+      position_level: json['position_level'] == null
+          ? null
+          : CodeName.fromJson(json['position_level'] as Map<String, dynamic>),
+      position: json['position'] == null
+          ? null
+          : CodeName.fromJson(json['position'] as Map<String, dynamic>),
+      ci_mission: json['ci_mission'] == null
+          ? null
+          : CodeName.fromJson(json['ci_mission'] as Map<String, dynamic>),
+      ci_department: json['ci_department'] == null
+          ? null
+          : CodeName.fromJson(json['ci_department'] as Map<String, dynamic>),
+      ci_work: json['ci_work'] == null
+          ? null
+          : CodeName.fromJson(json['ci_work'] as Map<String, dynamic>),
+      ci_unit: json['ci_unit'] == null
+          ? null
+          : CodeName.fromJson(json['ci_unit'] as Map<String, dynamic>),
+      md_mission: json['md_mission'] == null
+          ? null
+          : CodeName.fromJson(json['md_mission'] as Map<String, dynamic>),
+      md_department: json['md_department'] == null
+          ? null
+          : CodeName.fromJson(json['md_department'] as Map<String, dynamic>),
+      md_work: json['md_work'] == null
+          ? null
+          : CodeName.fromJson(json['md_work'] as Map<String, dynamic>),
+      md_unit: json['md_unit'] == null
+          ? null
+          : CodeName.fromJson(json['md_unit'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$EmployeeToJson(Employee instance) => <String, dynamic>{
@@ -184,7 +232,8 @@ Map<String, dynamic> _$EmployeeToJson(Employee instance) => <String, dynamic>{
       'goverment_status': instance.goverment_status,
       'side_id': instance.side_id,
       'course_balance': instance.course_balance,
-      'date_notify_position_advance': instance.date_notify_position_advance?.toIso8601String(),
+      'date_notify_position_advance':
+          instance.date_notify_position_advance?.toIso8601String(),
       'hr_group_work_education_id': instance.hr_group_work_education_id,
       'detail_notify_position_advance': instance.detail_notify_position_advance,
       'finger_scan_no_old': instance.finger_scan_no_old,

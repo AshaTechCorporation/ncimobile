@@ -1,11 +1,11 @@
 import 'dart:developer';
 import 'dart:io';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:path/path.dart' as path;
 
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:ncimobile/constants.dart';
@@ -122,53 +122,64 @@ class _BuildDisbursementPageState extends State<BuildDisbursementPage> {
                 ),
               ),
               SizedBox(
-                width: double.infinity,
-                height: size.height * 0.08,
-                child: Card(
-                  surfaceTintColor: Colors.white,
+                height: 10,
+              ),
+              Container(
+                height: MediaQuery.of(context).size.height * 0.07,
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
                   color: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8.0),
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(
+                    color: Colors.grey,
                   ),
-                  elevation: 2,
-                  child: DropdownButtonHideUnderline(
-                    child: DropdownButton2<String>(
-                      isExpanded: true,
-                      hint: Text(
-                        'เลือกประเภทการใช้งาน',
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontFamily: 'IBMPlexSansThai',
-                          color: Theme.of(context).hintColor,
-                        ),
-                      ),
-                      items: disbursement
-                          .map((String item) => DropdownMenuItem<String>(
-                                value: item,
-                                child: Text(
-                                  item,
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontFamily: 'IBMPlexSansThai',
-                                  ),
-                                ),
-                              ))
-                          .toList(),
-                      value: selectDisbursement,
-                      onChanged: (String? va) async {
-                        setState(() {
-                          selectDisbursement = va!;
-                        });
-                      },
-                      buttonStyleData: ButtonStyleData(
-                        padding: EdgeInsets.symmetric(horizontal: 8),
-                        height: size.height * 0.08,
-                      ),
-                      menuItemStyleData: MenuItemStyleData(
-                        height: size.height * 0.08,
+                ),
+                padding: EdgeInsets.all(8),
+                child: DropdownSearch<String>(
+                  selectedItem: selectDisbursement,
+                  // items: listProvinec,
+                  items: disbursement,
+                  itemAsString: (item) => item,
+                  popupProps: PopupProps.menu(
+                    constraints: BoxConstraints(maxHeight: 450),
+                    fit: FlexFit.loose,
+                    itemBuilder: (context, item, isSelected) => Container(
+                      margin: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            item,
+                            style: TextStyle(
+                              color: Colors.black,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
+                  dropdownDecoratorProps: DropDownDecoratorProps(
+                    baseStyle: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                      fontFamily: 'Prompt',
+                    ),
+                    dropdownSearchDecoration: InputDecoration(
+                      hintText: 'จังหวัด',
+                      hintStyle: TextStyle(
+                        color: Colors.black45,
+                        fontFamily: 'Prompt',
+                      ),
+                      border: InputBorder.none,
+                      suffixIconColor: Colors.grey,
+                    ),
+                  ),
+                  onChanged: (value) {
+                    setState(() {
+                      selectDisbursement = value!;
+                    });
+                  },
                 ),
               ),
               SizedBox(
@@ -545,53 +556,64 @@ class _BuildDisbursementPageState extends State<BuildDisbursementPage> {
                 ),
               ),
               SizedBox(
-                width: double.infinity,
-                height: size.height * 0.08,
-                child: Card(
-                  surfaceTintColor: Colors.white,
+                height: 10,
+              ),
+              Container(
+                height: MediaQuery.of(context).size.height * 0.07,
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
                   color: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8.0),
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(
+                    color: Colors.grey,
                   ),
-                  elevation: 2,
-                  child: DropdownButtonHideUnderline(
-                    child: DropdownButton2<String>(
-                      isExpanded: true,
-                      hint: Text(
-                        'เลือกประเภทการใช้งาน',
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontFamily: 'IBMPlexSansThai',
-                          color: Theme.of(context).hintColor,
-                        ),
-                      ),
-                      items: money
-                          .map((String item) => DropdownMenuItem<String>(
-                                value: item,
-                                child: Text(
-                                  item,
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontFamily: 'IBMPlexSansThai',
-                                  ),
-                                ),
-                              ))
-                          .toList(),
-                      value: selectMoney,
-                      onChanged: (String? va) async {
-                        setState(() {
-                          selectMoney = va!;
-                        });
-                      },
-                      buttonStyleData: ButtonStyleData(
-                        padding: EdgeInsets.symmetric(horizontal: 8),
-                        height: size.height * 0.08,
-                      ),
-                      menuItemStyleData: MenuItemStyleData(
-                        height: size.height * 0.08,
+                ),
+                padding: EdgeInsets.all(8),
+                child: DropdownSearch<String>(
+                  selectedItem: selectMoney,
+                  // items: listProvinec,
+                  items: money,
+                  itemAsString: (item) => item,
+                  popupProps: PopupProps.menu(
+                    constraints: BoxConstraints(maxHeight: 450),
+                    fit: FlexFit.loose,
+                    itemBuilder: (context, item, isSelected) => Container(
+                      margin: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            item,
+                            style: TextStyle(
+                              color: Colors.black,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
+                  dropdownDecoratorProps: DropDownDecoratorProps(
+                    baseStyle: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                      fontFamily: 'Prompt',
+                    ),
+                    dropdownSearchDecoration: InputDecoration(
+                      hintText: 'จังหวัด',
+                      hintStyle: TextStyle(
+                        color: Colors.black45,
+                        fontFamily: 'Prompt',
+                      ),
+                      border: InputBorder.none,
+                      suffixIconColor: Colors.grey,
+                    ),
+                  ),
+                  onChanged: (value) {
+                    setState(() {
+                      selectMoney = value!;
+                    });
+                  },
                 ),
               ),
             ],

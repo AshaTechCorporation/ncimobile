@@ -56,7 +56,7 @@ class _FirstPageState extends State<FirstPage> {
             BottomNavigationBarItem(icon: selectedIndex == 2 ? Image.asset('assets/icons/table_view_color.png') : Image.asset('assets/icons/table_view.png'), label: 'เบิก-จ่าย'),
             BottomNavigationBarItem(
                 icon: selectedIndex == 3 ? Image.asset('assets/icons/edit_calendar_color.png') : Image.asset('assets/icons/edit_calendar.png'), label: 'อนุมัติ'),
-            BottomNavigationBarItem(icon: selectedIndex == 4 ? Image.asset('assets/icons/description_color.png') : Image.asset('assets/icons/description.png'), label: 'รายการ'),
+            BottomNavigationBarItem(icon: selectedIndex == 4 ? Image.asset('assets/icons/description_color.png') : Image.asset('assets/icons/description.png'), label: 'เบิกของ'),
             BottomNavigationBarItem(icon: selectedIndex == 5 ? Image.asset('assets/icons/settings_color.png') : Image.asset('assets/icons/settings.png'), label: 'ตั้งค่า'),
           ],
         ));

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:ncimobile/home/firstPage.dart';
+import 'package:ncimobile/listProduct/Service/WithdrawItemsController.dart';
 import 'package:ncimobile/login/loginPage.dart';
 import 'package:ncimobile/project/service/ProjcetController.dart';
 import 'package:provider/provider.dart';
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => ProjectController()),
+        ChangeNotifierProvider(create: (_) => WithdrawItemsController()),
       ],
       child: MaterialApp(
         title: 'NCI',

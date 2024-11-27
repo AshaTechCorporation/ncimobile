@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:ncimobile/Dialog.dart';
 import 'package:ncimobile/LoadingDialog.dart';
 import 'package:ncimobile/constants.dart';
+import 'package:ncimobile/login/loginPage.dart';
 import 'package:ncimobile/models/project.dart';
 import 'package:ncimobile/project/projectDetailPage.dart';
 import 'package:ncimobile/project/service/ProjcetController.dart';
@@ -70,7 +71,13 @@ class _ProjectPageState extends State<ProjectPage> {
           title: 'แจ้งเตือน',
           description: '$e',
           pressYes: () {
-            Navigator.pop(context, true);
+            if (e.toString() != 'Token is expire') {
+              Navigator.pop(context);
+            } else {
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+                return Loginpage();
+              }));
+            }
           },
         ),
       );
@@ -83,7 +90,13 @@ class _ProjectPageState extends State<ProjectPage> {
           title: 'แจ้งเตือน',
           description: '$e',
           pressYes: () {
-            Navigator.pop(context, true);
+            if (e.toString() != 'Token is expire') {
+              Navigator.pop(context);
+            } else {
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+                return Loginpage();
+              }));
+            }
           },
         ),
       );

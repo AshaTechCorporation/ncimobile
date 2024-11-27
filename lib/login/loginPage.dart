@@ -99,7 +99,13 @@ class _LoginpageState extends State<Loginpage> {
                         title: 'แจ้งเตือน',
                         description: '$e',
                         pressYes: () {
-                          Navigator.pop(context);
+                          if (e.toString() != 'Token is expire') {
+                            Navigator.pop(context);
+                          } else {
+                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+                              return Loginpage();
+                            }));
+                          }
                         },
                       ),
                     );

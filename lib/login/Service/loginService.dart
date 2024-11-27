@@ -10,7 +10,7 @@ class LoginService {
     String username,
     String password,
   ) async {
-    final url = Uri.https(publicUrl, 'api/login');
+    final url = Uri.https(publicUrl, '/api/login');
     final response = await http.post(url, body: {
       'username': username,
       'password': password,

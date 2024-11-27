@@ -56,7 +56,7 @@ class CardDisbursementWidget extends StatelessWidget {
                 ),
                 Container(
                   padding: EdgeInsets.all(8),
-                  height: size.height * 0.07,
+                  height: size.height * 0.085,
                   width: size.width * 0.32,
                   decoration: BoxDecoration(
                     color: status == 'กำลังดำเนินการ'
@@ -85,7 +85,7 @@ class CardDisbursementWidget extends StatelessWidget {
                         children: [
                           Text(
                             status,
-                            style: TextStyle(color: Colors.white, fontSize: 15),
+                            style: TextStyle(color: Colors.white, fontSize: 14),
                           ),
                         ],
                       ),
