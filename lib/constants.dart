@@ -52,6 +52,16 @@ const List<Map<String, dynamic>> news = [
   }
 ];
 
+const List<String> approveTitle = [
+  'คำขออนุมัติโครงการ',
+  'คำขออนุมัติเบิกจ่าย',
+];
+
+const List<String> withdrawTitle = [
+  'รอยืนยันการเบิก',
+  'ยืนยันการเบิก',
+];
+
 const List<String> contentTitle = [
   'ทั้งหมด',
   'หัวหน้ากง.ตรวจสอบ',

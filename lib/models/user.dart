@@ -12,6 +12,7 @@ class User {
   bool? status;
   String? image;
   Employee? employee;
+  Employee? hr_employee;
 
   User({
     this.id,
@@ -21,6 +22,7 @@ class User {
     this.status,
     this.image,
     this.employee,
+    this.hr_employee,
   });
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ncimobile/approve/approvePage.dart';
+import 'package:ncimobile/constants.dart';
 import 'package:ncimobile/disbursement/disbursementPage.dart';
 import 'package:ncimobile/home/homePage.dart';
 import 'package:ncimobile/listProduct/listProducrPage.dart';
@@ -56,7 +57,11 @@ class _FirstPageState extends State<FirstPage> {
             BottomNavigationBarItem(icon: selectedIndex == 2 ? Image.asset('assets/icons/table_view_color.png') : Image.asset('assets/icons/table_view.png'), label: 'เบิก-จ่าย'),
             BottomNavigationBarItem(
                 icon: selectedIndex == 3 ? Image.asset('assets/icons/edit_calendar_color.png') : Image.asset('assets/icons/edit_calendar.png'), label: 'อนุมัติ'),
-            BottomNavigationBarItem(icon: selectedIndex == 4 ? Image.asset('assets/icons/description_color.png') : Image.asset('assets/icons/description.png'), label: 'เบิกของ'),
+            BottomNavigationBarItem(
+                icon: selectedIndex == 4
+                    ? Icon(Icons.card_giftcard, color: kMainColor, size: 38)
+                    : Icon(Icons.card_giftcard, color: const Color.fromARGB(255, 104, 104, 104), size: 38),
+                label: 'เบิกพัสดุ'),
             BottomNavigationBarItem(icon: selectedIndex == 5 ? Image.asset('assets/icons/settings_color.png') : Image.asset('assets/icons/settings.png'), label: 'ตั้งค่า'),
           ],
         ));

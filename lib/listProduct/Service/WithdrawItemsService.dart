@@ -97,4 +97,28 @@ class WithdrawItemsService {
       throw ApiException(data['message']);
     }
   }
+
+  static Future<List<WithdrawItem>> getListWithdraw({
+    String? search,
+    String? status,
+  }) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+    var headers = {'Authorization': 'Bearer $token', 'Content-Type': 'application/json'};
+    final url = Uri.https(publicUrl, '/api/sup/sub_withdraw/page', {
+      "perPage": '50',
+      "page": '1',
+      "search": search,
+      "approved": status,
+    });
+    final response = await http.get(url, headers: headers);
+    if (response.statusCode == 200) {
+      final data = convert.jsonDecode(response.body);
+      final list = data["data"]["data"] as List;
+      return list.map((e) => WithdrawItem.fromJson(e)).toList();
+    } else {
+      final data = convert.jsonDecode(response.body);
+      throw ApiException(data['message']);
+    }
+  }
 }

@@ -35,20 +35,35 @@ class _AddItemPageState extends State<AddItemPage> {
   var options = ScanOptions();
   List<SendItem> withdrawItemAPI = [];
   final TextEditingController remark = TextEditingController();
+  int? departmentId;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await getSharedPreferences();
       await getDepartmentsAll();
     });
+  }
+
+  Future<void> getSharedPreferences() async {
+    final prefs = await SharedPreferences.getInstance();
+    departmentId = prefs.getInt('departmentId');
   }
 
   Future getDepartmentsAll() async {
     try {
       LoadingDialog.open(context);
       await context.read<WithdrawItemsController>().getDepartments();
+      final listDeparments = context.read<WithdrawItemsController>().departments;
       if (!mounted) return;
+      if (departmentId != null) {
+        for (var i = 0; i < listDeparments!.length; i++) {
+          if (listDeparments[i].id == departmentId) {
+            selectDepartment = listDeparments[i];
+          }
+        }
+      }
       LoadingDialog.close(context);
     } on ClientException catch (e) {
       if (!mounted) return;
@@ -108,7 +123,54 @@ class _AddItemPageState extends State<AddItemPage> {
           },
           icon: Icon(Icons.arrow_back_ios),
         ),
-        title: Text('เพิ่มรายการ'),
+        title: Text('เบิกพัสดุ'),
+        actions: [
+          GestureDetector(
+            onTap: () async {
+              final TextEditingController qty = TextEditingController();
+              var result = await BarcodeScanner.scan(options: options);
+              inspect(result);
+              if (result.rawContent != '') {
+                try {
+                  final item = await WithdrawItemsService.searchBarCode(barcode: result.rawContent);
+                  final addItem = AddItem(
+                    item: item,
+                    qty: qty,
+                    totalPrice: null,
+                  );
+                  docScan.add(addItem);
+                  setState(() {});
+                } on ApiException catch (e) {
+                  if (!mounted) return;
+                  LoadingDialog.close(context);
+                  showDialog(
+                    context: context,
+                    builder: (context) => AlertDialogYes(
+                      title: 'แจ้งเตือน',
+                      description: '$e',
+                      pressYes: () {
+                        if (e.toString() != 'Token is expire') {
+                          Navigator.pop(context);
+                        } else {
+                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+                            return Loginpage();
+                          }));
+                        }
+                      },
+                    ),
+                  );
+                }
+              }
+            },
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Image.asset(
+                'assets/icons/5393325.png',
+                scale: 15,
+              ),
+            ),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -117,7 +179,7 @@ class _AddItemPageState extends State<AddItemPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'ประเภทการเบิก',
+                'แผนก',
                 style: TextStyle(fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold),
               ),
               Consumer<WithdrawItemsController>(
@@ -205,8 +267,10 @@ class _AddItemPageState extends State<AddItemPage> {
                                 suffixIconColor: Colors.grey,
                               ),
                             ),
-                            onChanged: (value) {
+                            onChanged: (value) async {
+                              final SharedPreferences prefs = await SharedPreferences.getInstance();
                               selectDepartment = value;
+                              await prefs.setInt('departmentId', value!.id!);
                             },
                           ),
                         );
@@ -216,9 +280,276 @@ class _AddItemPageState extends State<AddItemPage> {
                 height: 10,
               ),
               Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    'รายละเอียด',
+                    'เพิ่มรายการ',
+                    style: TextStyle(fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold),
+                  ),
+
+                  // SizedBox(
+                  //   width: 15,
+                  // ),
+                  // GestureDetector(
+                  //   onTap: () async {
+                  //     final TextEditingController qty = TextEditingController();
+                  //     var result = await BarcodeScanner.scan(options: options);
+                  //     inspect(result);
+                  //     if (result.rawContent != '') {
+                  //       try {
+                  //         final item = await WithdrawItemsService.searchBarCode(barcode: result.rawContent);
+                  //         final addItem = AddItem(
+                  //           item: item,
+                  //           qty: qty,
+                  //           totalPrice: null,
+                  //         );
+                  //         docScan.add(addItem);
+                  //         setState(() {});
+                  //       } on ApiException catch (e) {
+                  //         if (!mounted) return;
+                  //         LoadingDialog.close(context);
+                  //         showDialog(
+                  //           context: context,
+                  //           builder: (context) => AlertDialogYes(
+                  //             title: 'แจ้งเตือน',
+                  //             description: '$e',
+                  //             pressYes: () {
+                  //               if (e.toString() != 'Token is expire') {
+                  //                 Navigator.pop(context);
+                  //               } else {
+                  //                 Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+                  //                   return Loginpage();
+                  //                 }));
+                  //               }
+                  //             },
+                  //           ),
+                  //         );
+                  //       }
+                  //     }
+                  //   },
+                  //   child: Container(
+                  //     height: size.height * 0.08,
+                  //     padding: EdgeInsets.all(8),
+                  //     decoration: BoxDecoration(
+                  //       border: Border.all(color: Colors.grey),
+                  //       borderRadius: BorderRadius.circular(15),
+                  //     ),
+                  //     child: Column(
+                  //       children: [
+                  //         Icon(
+                  //           Icons.document_scanner_outlined,
+                  //           color: Colors.black,
+                  //         ),
+                  //         Text(
+                  //           'แสกนบาร์โค้ด',
+                  //           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+                  //         ),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
+                ],
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              docScan.isEmpty
+                  ? Container(
+                      height: size.height * 0.45,
+                      padding: EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Center(
+                        child: Text(
+                          'ไม่มีรายการ',
+                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                        ),
+                      ),
+                    )
+                  : Container(
+                      height: size.height * 0.45,
+                      padding: EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Column(
+                        children: List.generate(
+                            docScan.length,
+                            (index) => Stack(
+                                  children: [
+                                    Container(
+                                      width: double.infinity,
+                                      margin: EdgeInsets.all(4),
+                                      padding: EdgeInsets.all(8),
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: kMainColor,
+                                        ),
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Text(
+                                                'รายการ: ',
+                                                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                                              ),
+                                              Text(
+                                                docScan[index].item?.sup_item?.name ?? '',
+                                                style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
+                                              ),
+                                            ],
+                                          ),
+
+                                          // Text(
+                                          //   'ประเภท: ${docScan[index].sup_unit_id}',
+                                          // ),
+                                          Row(
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                'จำนวนเบิก:  ',
+                                                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                                              ),
+                                              InkWell(
+                                                onTap: () {
+                                                  if (docScan[index].qty!.text.isNotEmpty) {
+                                                    if (int.parse(docScan[index].qty!.text) > 1) {
+                                                      final current = int.tryParse(docScan[index].qty!.text);
+                                                      final newValue = current! - 1;
+                                                      docScan[index].qty!.text = newValue.toString();
+                                                      setState(() {
+                                                        docScan[index].totalPrice = (int.parse(docScan[index].qty!.text) * int.parse(docScan[index].item!.sup_item!.price!));
+                                                      });
+                                                    }
+                                                  }
+                                                },
+                                                child: Container(
+                                                  width: size.width * 0.07,
+                                                  height: size.width * 0.07,
+                                                  decoration: BoxDecoration(color: Color(0xFFCFD8DC), borderRadius: BorderRadius.circular(6)),
+                                                  child: Icon(
+                                                    Icons.remove,
+                                                    size: 15,
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                width: 10,
+                                              ),
+                                              InputTextFormField(
+                                                controller: docScan[index].qty,
+                                                width: size.width * 0.2,
+                                                height: size.height * 0.05,
+                                                textAlign: TextAlign.center,
+                                                hintText: 'จำนวน',
+                                                onChanged: (p0) {
+                                                  setState(() {
+                                                    docScan[index].totalPrice = (int.parse(p0 == "" ? '0' : p0) * int.parse(docScan[index].item!.sup_item!.price!));
+                                                  });
+                                                },
+                                              ),
+                                              SizedBox(
+                                                width: 10,
+                                              ),
+                                              InkWell(
+                                                onTap: () {
+                                                  if (docScan[index].qty!.text.isNotEmpty) {
+                                                    final current = int.tryParse(docScan[index].qty!.text);
+                                                    final newValue = current! + 1;
+                                                    docScan[index].qty!.text = newValue.toString();
+                                                    setState(() {
+                                                      docScan[index].totalPrice = (int.parse(docScan[index].qty!.text) * int.parse(docScan[index].item!.sup_item!.price!));
+                                                    });
+                                                  }
+                                                },
+                                                child: Container(
+                                                  width: size.width * 0.07,
+                                                  height: size.width * 0.07,
+                                                  decoration: BoxDecoration(color: Color(0xFFCFD8DC), borderRadius: BorderRadius.circular(6)),
+                                                  child: Icon(
+                                                    Icons.add,
+                                                    size: 15,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          Row(
+                                            children: [
+                                              Text(
+                                                'เหลือจำนวน: ',
+                                                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                                              ),
+                                              Text(
+                                                '${docScan[index].item?.stock_current_balance ?? '0'}',
+                                                style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
+                                              ),
+                                            ],
+                                          ),
+                                          Row(
+                                            children: [
+                                              Text(
+                                                'ราคาต่อหน่วย: ',
+                                                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                                              ),
+                                              Text(
+                                                '${docScan[index].item?.sup_item?.price}',
+                                                style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
+                                              ),
+                                            ],
+                                          ),
+                                          Row(
+                                            children: [
+                                              Text(
+                                                'ราคารวม: ',
+                                                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                                              ),
+                                              Text(
+                                                '${docScan[index].totalPrice ?? ''}',
+                                                style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Positioned(
+                                      right: 0,
+                                      top: 0,
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          setState(() {
+                                            docScan.removeAt(index);
+                                          });
+                                        },
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(30),
+                                            color: Colors.red,
+                                          ),
+                                          child: Column(
+                                            children: [Icon(Icons.remove)],
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                )).reversed.toList(),
+                      ),
+                    ),
+              SizedBox(
+                height: 10,
+              ),
+              Row(
+                children: [
+                  Text(
+                    'รายละเอียดเพิ่มเติม',
                     style: TextStyle(fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold),
                   ),
                 ],
@@ -228,145 +559,11 @@ class _AddItemPageState extends State<AddItemPage> {
                 width: double.infinity,
                 hintText: 'รายละเอียด',
                 keyboardType: TextInputType.text,
+                height: size.height * 0.25,
               ),
               SizedBox(
                 height: 10,
               ),
-              Row(
-                children: [
-                  Text(
-                    'แสกนรายการ',
-                    style: TextStyle(fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(
-                    width: 15,
-                  ),
-                  GestureDetector(
-                    onTap: () async {
-                      final TextEditingController qty = TextEditingController();
-                      var result = await BarcodeScanner.scan(options: options);
-                      inspect(result);
-                      if (result.rawContent != '') {
-                        final item = await WithdrawItemsService.searchBarCode(barcode: result.rawContent);
-                        final addItem = AddItem(
-                          item: item,
-                          qty: qty,
-                          totalPrice: null,
-                        );
-                        docScan.add(addItem);
-                      }
-                      setState(() {});
-                    },
-                    child: Icon(
-                      Icons.document_scanner_outlined,
-                      color: Colors.black,
-                    ),
-                  ),
-                ],
-              ),
-              docScan.isEmpty
-                  ? SizedBox.shrink()
-                  : Column(
-                      children: List.generate(
-                          docScan.length,
-                          (index) => Stack(
-                                children: [
-                                  Container(
-                                    width: double.infinity,
-                                    margin: EdgeInsets.all(4),
-                                    padding: EdgeInsets.all(8),
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                        color: kMainColor,
-                                      ),
-                                      borderRadius: BorderRadius.circular(5),
-                                    ),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Text(
-                                              'รายการ: ',
-                                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-                                            ),
-                                            Text(
-                                              docScan[index].item?.sup_item?.name ?? '',
-                                              style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
-                                            ),
-                                          ],
-                                        ),
-
-                                        // Text(
-                                        //   'ประเภท: ${docScan[index].sup_unit_id}',
-                                        // ),
-                                        Row(
-                                          crossAxisAlignment: CrossAxisAlignment.end,
-                                          children: [
-                                            Text(
-                                              'จำนวน:  ',
-                                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-                                            ),
-                                            InputTextFormField(
-                                              controller: docScan[index].qty,
-                                              width: size.width * 0.3,
-                                              hintText: 'จำนวน',
-                                              onChanged: (p0) {
-                                                setState(() {
-                                                  docScan[index].totalPrice = (int.parse(p0 == "" ? '0' : p0) * int.parse(docScan[index].item!.sup_item!.price!));
-                                                });
-                                              },
-                                            ),
-                                          ],
-                                        ),
-                                        Row(
-                                          children: [
-                                            Text(
-                                              'ราคาต่อหน่วย: ',
-                                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-                                            ),
-                                            Text(
-                                              '${docScan[index].item?.sup_item?.price}',
-                                              style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
-                                            ),
-                                          ],
-                                        ),
-                                        Row(
-                                          children: [
-                                            Text(
-                                              'ราคารวม: ',
-                                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-                                            ),
-                                            Text(
-                                              '${docScan[index].totalPrice ?? ''}',
-                                              style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Positioned(
-                                    right: 0,
-                                    top: 0,
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        docScan.removeAt(index);
-                                      },
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(30),
-                                          color: Colors.red,
-                                        ),
-                                        child: Column(
-                                          children: [Icon(Icons.remove)],
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              )).reversed.toList(),
-                    )
             ],
           ),
         ),
@@ -508,20 +705,41 @@ class _AddItemPageState extends State<AddItemPage> {
                       );
                       LoadingDialog.close(context);
                       final approved = await showDialog<String>(
-                        barrierColor: Colors.grey,
+                        barrierColor: Color.fromARGB(217, 158, 158, 158),
                         context: context,
-                        builder: (context) => AlertDialogYesNo(
-                          title: 'แจ้งเตือน',
-                          description: 'ยืนยันที่จะเบิก',
-                          pressYes: () async {
-                            Navigator.pop(context, 'finish');
-                          },
-                          pressNo: () {
-                            Navigator.pop(context, 'cancel');
-                          },
+                        builder: (context) => AlertDialog(
+                          title: Text(
+                            'แจ้งเตือน',
+                            style: TextStyle(fontSize: 15),
+                          ),
+                          content: Text(
+                            'ยืนยันที่จะเบิก',
+                            style: TextStyle(fontSize: 12),
+                          ),
+                          actions: [
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.pop(context, 'cancel');
+                              },
+                              child: Text('ยกเลิก'),
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.pop(context, 'finish');
+                                // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: ((context) => FirstPage())), (route) => false);
+                              },
+                              child: Text(
+                                'ยืนยัน',
+                                style: TextStyle(color: Colors.amber),
+                              ),
+                            ),
+                          ],
                         ),
                       );
-                      if (approved != '') {
+                      if (approved != '' && approved != null) {
                         LoadingDialog.open(context);
                         await WithdrawItemsService.approvedWinthdraw(id: code.id.toString(), status: approved!);
                         LoadingDialog.close(context);

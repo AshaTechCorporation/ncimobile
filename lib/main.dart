@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 import 'package:ncimobile/home/firstPage.dart';
 import 'package:ncimobile/listProduct/Service/WithdrawItemsController.dart';
 import 'package:ncimobile/login/loginPage.dart';
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    Intl.defaultLocale = 'th';
     initializeDateFormatting('th');
     return MultiProvider(
       providers: [

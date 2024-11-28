@@ -15,6 +15,7 @@ class ApprovePage extends StatefulWidget {
 }
 
 class _ApprovePageState extends State<ApprovePage> {
+  int? title = 0;
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -29,6 +30,7 @@ class _ApprovePageState extends State<ApprovePage> {
             pressNoti: () {},
           ),
           Container(
+            height: size.height * 0.73,
             decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(35.0), topRight: Radius.circular(35.0))),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,40 +49,101 @@ class _ApprovePageState extends State<ApprovePage> {
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: size.width * 0.04),
-                  child: Text(
-                    'คำขออนุมัติโครงการ (1)',
-                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                  child: Row(
+                    children: List.generate(
+                        approveTitle.length,
+                        (index) => Padding(
+                              padding: EdgeInsets.symmetric(horizontal: size.width * 0.01),
+                              child: GestureDetector(
+                                onTap: () async {
+                                  setState(() {
+                                    title = index;
+                                  });
+                                  // await listWithdrawAll(status: title == 0 ? 'open' : 'finish');
+                                },
+                                child: Container(
+                                  width: size.width * 0.44,
+                                  decoration: BoxDecoration(
+                                    color: index == title ? kMainColor : Colors.white,
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(5.0),
+                                    ),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        offset: Offset(0, 0),
+                                        blurRadius: 0.2,
+                                        spreadRadius: 0.2,
+                                        color: Colors.black26,
+                                      ),
+                                    ],
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Center(
+                                      child: Text(
+                                        approveTitle[index],
+                                        style: TextStyle(
+                                          color: index == title ? Colors.white : Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            )),
                   ),
                 ),
                 SizedBox(
                   height: size.height * 0.02,
                 ),
-                SearchProjectWidget(size: size),
-                SizedBox(
-                  height: size.height * 0.02,
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: size.width * 0.04),
-                  child: ProjectApproveWidget(size: size),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: size.width * 0.04),
-                  child: Text(
-                    'คำขออนุมัติเบิกจ่าย (1)',
-                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                  ),
-                ),
-                SizedBox(
-                  height: size.height * 0.02,
-                ),
-                SearchProjectWidget(size: size),
-                SizedBox(
-                  height: size.height * 0.02,
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: size.width * 0.04),
-                  child: CardApproveDisbursementWidget(size: size),
-                ),
+                title == 0
+                    ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: size.width * 0.04),
+                            child: Text(
+                              'คำขออนุมัติโครงการ (1)',
+                              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          SizedBox(
+                            height: size.height * 0.02,
+                          ),
+                          SearchProjectWidget(size: size),
+                          SizedBox(
+                            height: size.height * 0.02,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: size.width * 0.04),
+                            child: ProjectApproveWidget(size: size),
+                          ),
+                        ],
+                      )
+                    : Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: size.width * 0.04),
+                            child: Text(
+                              'คำขออนุมัติเบิกจ่าย (1)',
+                              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          SizedBox(
+                            height: size.height * 0.02,
+                          ),
+                          SearchProjectWidget(size: size),
+                          SizedBox(
+                            height: size.height * 0.02,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: size.width * 0.04),
+                            child: CardApproveDisbursementWidget(size: size),
+                          ),
+                        ],
+                      ),
                 SizedBox(
                   height: size.height * 0.04,
                 ),
