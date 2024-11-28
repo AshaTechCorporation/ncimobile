@@ -273,18 +273,18 @@ class _ListProducrPageState extends State<ListProducrPage> {
                                               builder: (context) => AlertDialog(
                                                 title: Text(
                                                   'แจ้งเตือน',
-                                                  style: TextStyle(fontSize: 15),
+                                                  style: TextStyle(fontSize: 20),
                                                 ),
                                                 content: Text(
-                                                  'ยืนยันที่จะเบิก',
-                                                  style: TextStyle(fontSize: 12),
+                                                  'ยืนยันเบิกพัสดุ',
+                                                  style: TextStyle(fontSize: 15),
                                                 ),
                                                 actions: [
                                                   GestureDetector(
                                                     onTap: () {
                                                       Navigator.pop(context);
                                                     },
-                                                    child: Text('กลับ'),
+                                                    child: Text('ออก'),
                                                   ),
                                                   SizedBox(
                                                     width: 20,

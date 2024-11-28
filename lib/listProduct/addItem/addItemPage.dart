@@ -713,7 +713,7 @@ class _AddItemPageState extends State<AddItemPage> {
                             style: TextStyle(fontSize: 15),
                           ),
                           content: Text(
-                            'ยืนยันที่จะเบิก',
+                            'ยืนยันเบิกพัสดุ',
                             style: TextStyle(fontSize: 12),
                           ),
                           actions: [
