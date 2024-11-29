@@ -98,131 +98,133 @@ class _WithdarwSearchPageState extends State<WithdarwSearchPage> {
                           children: List.generate(
                             listWithdraws!.length,
                             (index) {
-                              return GestureDetector(
-                                onTap: () async {
-                                  if (listWithdraws?[index].approved != 'finish' || listWithdraws?[index].approved == 'cancel') {
-                                    final approved = await showDialog<String>(
-                                      barrierDismissible: false,
-                                      barrierColor: Color.fromARGB(217, 158, 158, 158),
-                                      context: context,
-                                      builder: (context) => AlertDialog(
-                                        title: Text(
-                                          'แจ้งเตือน',
-                                          style: TextStyle(fontSize: 20),
-                                        ),
-                                        content: Text(
-                                          'ยืนยันเบิกพัสดุ',
-                                          style: TextStyle(fontSize: 15),
-                                        ),
-                                        actions: [
-                                          GestureDetector(
-                                            onTap: () {
-                                              Navigator.pop(context);
-                                            },
-                                            child: Text('ออก'),
-                                          ),
-                                          SizedBox(
-                                            width: 20,
-                                          ),
-                                          GestureDetector(
-                                            onTap: () {
-                                              Navigator.pop(context, 'cancel');
-                                            },
-                                            child: Text(
-                                              'ยกเลิกเบิก',
-                                              style: TextStyle(color: Colors.red),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: 20,
-                                          ),
-                                          GestureDetector(
-                                            onTap: () {
-                                              Navigator.pop(context, 'finish');
-                                              // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: ((context) => FirstPage())), (route) => false);
-                                            },
-                                            child: Text(
-                                              'ยืนยัน',
-                                              style: TextStyle(color: Colors.amber),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                    if (approved != '' && approved != null) {
-                                      LoadingDialog.open(context);
-                                      await WithdrawItemsService.approvedWinthdraw(id: listWithdraws![index].id.toString(), status: approved!);
-                                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: ((context) => FirstPage())), (route) => false);
-                                      LoadingDialog.close(context);
-                                    }
-                                  }
-                                },
-                                child: Container(
-                                    width: double.infinity,
-                                    margin: const EdgeInsets.symmetric(vertical: 8),
-                                    padding: EdgeInsets.all(8),
-                                    decoration: BoxDecoration(
-                                      border: Border.all(color: Colors.grey, width: 1),
-                                      borderRadius: BorderRadius.circular(15),
-                                    ),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          crossAxisAlignment: CrossAxisAlignment.end,
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                // ${DateTime.parse(listWithdraws![index].date!).formatTo('dd MMM yy')}
-                                                Text(
-                                                  'เบิกวันที่:  ${convertToBuddhistDate(DateTime.parse(listWithdraws![index].date!))}',
-                                                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                              return listWithdraws?[index].approved == 'cancel'
+                                  ? SizedBox.shrink()
+                                  : GestureDetector(
+                                      onTap: () async {
+                                        if (listWithdraws?[index].approved != 'finish' || listWithdraws?[index].approved == 'cancel') {
+                                          final approved = await showDialog<String>(
+                                            barrierDismissible: false,
+                                            barrierColor: Color.fromARGB(217, 158, 158, 158),
+                                            context: context,
+                                            builder: (context) => AlertDialog(
+                                              title: Text(
+                                                'แจ้งเตือน',
+                                                style: TextStyle(fontSize: 20),
+                                              ),
+                                              content: Text(
+                                                'ยืนยันเบิกพัสดุ',
+                                                style: TextStyle(fontSize: 15),
+                                              ),
+                                              actions: [
+                                                GestureDetector(
+                                                  onTap: () {
+                                                    Navigator.pop(context);
+                                                  },
+                                                  child: Text('ออก'),
                                                 ),
-                                                Text(
-                                                  'เลขที่ใบเบิก: ${listWithdraws?[index].code ?? ''}',
-                                                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                                                SizedBox(
+                                                  width: 20,
+                                                ),
+                                                GestureDetector(
+                                                  onTap: () {
+                                                    Navigator.pop(context, 'cancel');
+                                                  },
+                                                  child: Text(
+                                                    'ยกเลิกเบิก',
+                                                    style: TextStyle(color: Colors.red),
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: 20,
+                                                ),
+                                                GestureDetector(
+                                                  onTap: () {
+                                                    Navigator.pop(context, 'finish');
+                                                    // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: ((context) => FirstPage())), (route) => false);
+                                                  },
+                                                  child: Text(
+                                                    'ยืนยัน',
+                                                    style: TextStyle(color: Colors.amber),
+                                                  ),
                                                 ),
                                               ],
                                             ),
-                                            Container(
-                                              width: size.width * 0.3,
-                                              padding: EdgeInsets.all(8),
-                                              decoration: BoxDecoration(
-                                                color: listWithdraws?[index].approved == 'finish' ? Colors.green : Colors.red,
-                                                borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                                              ),
-                                              child: Column(
-                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                          );
+                                          if (approved != '' && approved != null) {
+                                            LoadingDialog.open(context);
+                                            await WithdrawItemsService.approvedWinthdraw(id: listWithdraws![index].id.toString(), status: approved!);
+                                            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: ((context) => FirstPage())), (route) => false);
+                                            LoadingDialog.close(context);
+                                          }
+                                        }
+                                      },
+                                      child: Container(
+                                          width: double.infinity,
+                                          margin: const EdgeInsets.symmetric(vertical: 8),
+                                          padding: EdgeInsets.all(8),
+                                          decoration: BoxDecoration(
+                                            border: Border.all(color: Colors.grey, width: 1),
+                                            borderRadius: BorderRadius.circular(15),
+                                          ),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Row(
+                                                crossAxisAlignment: CrossAxisAlignment.end,
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                 children: [
-                                                  Text(
-                                                    'สถานะ',
-                                                    style: TextStyle(color: Colors.white, fontSize: 12),
+                                                  Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [
+                                                      // ${DateTime.parse(listWithdraws![index].date!).formatTo('dd MMM yy')}
+                                                      Text(
+                                                        'เบิกวันที่:  ${convertToBuddhistDate(DateTime.parse(listWithdraws![index].date!))}',
+                                                        style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                                                      ),
+                                                      Text(
+                                                        'เลขที่ใบเบิก: ${listWithdraws?[index].code ?? ''}',
+                                                        style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                                                      ),
+                                                    ],
                                                   ),
-                                                  Center(
-                                                    child: Text(
-                                                      listWithdraws?[index].approved == 'finish' ? 'สำเร็จ' : 'รอยืนยันการเบิก',
-                                                      style: TextStyle(color: Colors.white, fontSize: 12),
+                                                  Container(
+                                                    width: size.width * 0.3,
+                                                    padding: EdgeInsets.all(8),
+                                                    decoration: BoxDecoration(
+                                                      color: listWithdraws?[index].approved == 'finish' ? Colors.green : Colors.red,
+                                                      borderRadius: BorderRadius.all(Radius.circular(8.0)),
                                                     ),
-                                                  )
+                                                    child: Column(
+                                                      mainAxisAlignment: MainAxisAlignment.center,
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: [
+                                                        Text(
+                                                          'สถานะ',
+                                                          style: TextStyle(color: Colors.white, fontSize: 12),
+                                                        ),
+                                                        Center(
+                                                          child: Text(
+                                                            listWithdraws?[index].approved == 'finish' ? 'สำเร็จ' : 'รอยืนยันการเบิก',
+                                                            style: TextStyle(color: Colors.white, fontSize: 12),
+                                                          ),
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ),
                                                 ],
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                        Text(
-                                          'ผู้เบิก: ${listWithdraws?[index].user?.hr_employee?.fname ?? ''}  ${listWithdraws?[index].user?.hr_employee?.lname ?? ''}',
-                                          style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                                        ),
-                                        Text(
-                                          'รายละเอียดการเบิก: ${listWithdraws?[index].remark ?? ' - '}',
-                                          style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                                        ),
-                                      ],
-                                    )),
-                              );
+                                              Text(
+                                                'ผู้เบิก: ${listWithdraws?[index].user?.hr_employee?.fname ?? ''}  ${listWithdraws?[index].user?.hr_employee?.lname ?? ''}',
+                                                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                                              ),
+                                              Text(
+                                                'รายละเอียดการเบิก: ${listWithdraws?[index].remark ?? ' - '}',
+                                                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                                              ),
+                                            ],
+                                          )),
+                                    );
                             },
                           ),
                         ),

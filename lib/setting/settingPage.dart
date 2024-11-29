@@ -4,6 +4,7 @@ import 'package:ncimobile/LoadingDialog.dart';
 import 'package:ncimobile/constants.dart';
 import 'package:ncimobile/login/loginPage.dart';
 import 'package:ncimobile/project/widgets/HeadderProjectWidget.dart';
+import 'package:ncimobile/setting/Report/ReportPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingPage extends StatefulWidget {
@@ -122,6 +123,26 @@ class _SettingPageState extends State<SettingPage> {
                       ],
                     ),
                   ],
+                ),
+                Divider(
+                  thickness: 2,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) {
+                      return ReportPage();
+                    }));
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "ร้องเรียน",
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
+                      ),
+                      Icon(Icons.arrow_forward_ios)
+                    ],
+                  ),
                 ),
                 Divider(
                   thickness: 2,
