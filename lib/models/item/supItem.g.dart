@@ -65,7 +65,9 @@ SupItem _$SupItemFromJson(Map<String, dynamic> json) => SupItem(
       sup_pr_method: json['sup_pr_method'] as String?,
       hr_ci_department: json['hr_ci_department'] as String?,
       hr_ci_work: json['hr_ci_work'] as String?,
-      user_pr: json['user_pr'] as String?,
+      user_pr: json['user_pr'] == null
+          ? null
+          : User.fromJson(json['user_pr'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$SupItemToJson(SupItem instance) => <String, dynamic>{

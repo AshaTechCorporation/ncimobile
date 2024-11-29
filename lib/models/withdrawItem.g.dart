@@ -27,6 +27,9 @@ WithdrawItem _$WithdrawItemFromJson(Map<String, dynamic> json) => WithdrawItem(
           ? null
           : Department.fromJson(
               json['hr_ci_department'] as Map<String, dynamic>),
+      sup_item_trans: (json['sup_item_trans'] as List<dynamic>?)
+          ?.map((e) => ItemWithdraw.fromJson(e as Map<String, dynamic>))
+          .toList(),
       user: json['user'] == null
           ? null
           : User.fromJson(json['user'] as Map<String, dynamic>),
@@ -51,5 +54,6 @@ Map<String, dynamic> _$WithdrawItemToJson(WithdrawItem instance) =>
       'doc_no': instance.doc_no,
       'No': instance.No,
       'hr_ci_department': instance.hr_ci_department,
+      'sup_item_trans': instance.sup_item_trans,
       'user': instance.user,
     };

@@ -1,6 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:ncimobile/models/item/supItemCategory.dart';
 import 'package:ncimobile/models/item/supItemType.dart';
+import 'package:ncimobile/models/user.dart';
 
 part 'supItem.g.dart';
 
@@ -52,7 +53,7 @@ class SupItem {
   final String? sup_pr_method;
   final String? hr_ci_department;
   final String? hr_ci_work;
-  final String? user_pr;
+  final User? user_pr;
 
   SupItem({
     this.id,

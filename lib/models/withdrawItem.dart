@@ -1,6 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:ncimobile/models/department/department.dart';
-import 'package:ncimobile/models/employee.dart';
+import 'package:ncimobile/models/item/item.dart';
+import 'package:ncimobile/models/item/itemWithdraw.dart';
 import 'package:ncimobile/models/user.dart';
 
 part 'withdrawItem.g.dart';
@@ -24,6 +25,7 @@ class WithdrawItem {
   String? doc_no;
   int? No;
   Department? hr_ci_department;
+  List<ItemWithdraw>? sup_item_trans;
   User? user;
 
   WithdrawItem({
@@ -44,6 +46,7 @@ class WithdrawItem {
     this.doc_no,
     this.No,
     this.hr_ci_department,
+    this.sup_item_trans,
     this.user,
   });
 

@@ -133,7 +133,7 @@ class _AddItemPageState extends State<AddItemPage> {
                 inspect(result);
                 if (result.rawContent != '') {
                   try {
-                    final item = await WithdrawItemsService.searchBarCode(barcode: result.rawContent, department: selectDepartment!.id!);
+                    final item = await WithdrawItemsService.searchBarCode(barcode: result.rawContent, department: selectDepartment!.id!.toString());
                     if (item != null) {
                       final addItem = AddItem(
                         item: item,
@@ -406,136 +406,162 @@ class _AddItemPageState extends State<AddItemPage> {
                                           ),
                                           borderRadius: BorderRadius.circular(10),
                                         ),
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                        child: Row(
                                           children: [
-                                            Row(
-                                              children: [
-                                                Text(
-                                                  'รายการ: ',
-                                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                                            Container(
+                                              width: size.width * 0.18,
+                                              height: size.height * 0.1,
+                                              padding: EdgeInsets.all(8),
+                                              decoration: BoxDecoration(
+                                                border: Border.all(
+                                                  color: Colors.grey,
                                                 ),
-                                                Text(
-                                                  docScan[index].item?.sup_item?.name ?? '',
-                                                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
-                                                ),
-                                              ],
+                                                borderRadius: BorderRadius.circular(10),
+                                              ),
+                                              child: Image.network(
+                                                docScan[index].item?.sup_item?.image ?? '',
+                                                fit: BoxFit.fill,
+                                              ),
                                             ),
+                                            SizedBox(
+                                              width: 10,
+                                            ),
+                                            Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    Text(
+                                                      'รายการ: ',
+                                                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                                                    ),
+                                                    SizedBox(
+                                                      width: size.width * 0.45,
+                                                      child: Text(
+                                                        '${docScan[index].item?.sup_item?.name ?? ''} gfdgdfgfd',
+                                                        style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
+                                                        maxLines: 1,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
 
-                                            // Text(
-                                            //   'ประเภท: ${docScan[index].sup_unit_id}',
-                                            // ),
-                                            Row(
-                                              crossAxisAlignment: CrossAxisAlignment.center,
-                                              children: [
-                                                Text(
-                                                  'จำนวนเบิก:  ',
-                                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-                                                ),
-                                                InkWell(
-                                                  onTap: () {
-                                                    if (docScan[index].qty!.text.isNotEmpty) {
-                                                      if (int.parse(docScan[index].qty!.text) > 1) {
-                                                        final current = int.tryParse(docScan[index].qty!.text);
-                                                        final newValue = current! - 1;
-                                                        docScan[index].qty!.text = newValue.toString();
+                                                // Text(
+                                                //   'ประเภท: ${docScan[index].sup_unit_id}',
+                                                // ),
+                                                Row(
+                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                  children: [
+                                                    Text(
+                                                      'จำนวนเบิก:  ',
+                                                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                                                    ),
+                                                    InkWell(
+                                                      onTap: () {
+                                                        if (docScan[index].qty!.text.isNotEmpty) {
+                                                          if (int.parse(docScan[index].qty!.text) > 1) {
+                                                            final current = int.tryParse(docScan[index].qty!.text);
+                                                            final newValue = current! - 1;
+                                                            docScan[index].qty!.text = newValue.toString();
+                                                            setState(() {
+                                                              docScan[index].totalPrice = (int.parse(docScan[index].qty!.text) * int.parse(docScan[index].item!.sup_item!.price!));
+                                                            });
+                                                          }
+                                                        }
+                                                      },
+                                                      child: Container(
+                                                        width: size.width * 0.07,
+                                                        height: size.width * 0.07,
+                                                        decoration: BoxDecoration(color: Color(0xFFCFD8DC), borderRadius: BorderRadius.circular(6)),
+                                                        child: Icon(
+                                                          Icons.remove,
+                                                          size: 15,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      width: 10,
+                                                    ),
+                                                    InputTextFormField(
+                                                      controller: docScan[index].qty,
+                                                      width: size.width * 0.12,
+                                                      height: size.height * 0.05,
+                                                      textAlign: TextAlign.center,
+                                                      keyboardType: TextInputType.number,
+                                                      // hintText: 'จำนวน',
+                                                      onChanged: (p0) {
                                                         setState(() {
-                                                          docScan[index].totalPrice = (int.parse(docScan[index].qty!.text) * int.parse(docScan[index].item!.sup_item!.price!));
+                                                          docScan[index].totalPrice = (int.parse(p0 == "" ? '0' : p0) * int.parse(docScan[index].item!.sup_item!.price!));
                                                         });
-                                                      }
-                                                    }
-                                                  },
-                                                  child: Container(
-                                                    width: size.width * 0.07,
-                                                    height: size.width * 0.07,
-                                                    decoration: BoxDecoration(color: Color(0xFFCFD8DC), borderRadius: BorderRadius.circular(6)),
-                                                    child: Icon(
-                                                      Icons.remove,
-                                                      size: 15,
+                                                      },
                                                     ),
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  width: 10,
-                                                ),
-                                                InputTextFormField(
-                                                  controller: docScan[index].qty,
-                                                  width: size.width * 0.2,
-                                                  height: size.height * 0.05,
-                                                  textAlign: TextAlign.center,
-                                                  keyboardType: TextInputType.number,
-                                                  hintText: 'จำนวน',
-                                                  onChanged: (p0) {
-                                                    setState(() {
-                                                      docScan[index].totalPrice = (int.parse(p0 == "" ? '0' : p0) * int.parse(docScan[index].item!.sup_item!.price!));
-                                                    });
-                                                  },
-                                                ),
-                                                SizedBox(
-                                                  width: 10,
-                                                ),
-                                                InkWell(
-                                                  onTap: () {
-                                                    if (docScan[index].qty!.text.isNotEmpty) {
-                                                      final current = int.tryParse(docScan[index].qty!.text);
-                                                      final newValue = current! + 1;
-                                                      docScan[index].qty!.text = newValue.toString();
-                                                      setState(() {
-                                                        docScan[index].totalPrice = (int.parse(docScan[index].qty!.text) * int.parse(docScan[index].item!.sup_item!.price!));
-                                                      });
-                                                    } else {
-                                                      const int newValue = 1;
-                                                      docScan[index].qty!.text = newValue.toString();
-                                                      setState(() {
-                                                        docScan[index].totalPrice = (int.parse(docScan[index].qty!.text) * int.parse(docScan[index].item!.sup_item!.price!));
-                                                      });
-                                                    }
-                                                  },
-                                                  child: Container(
-                                                    width: size.width * 0.07,
-                                                    height: size.width * 0.07,
-                                                    decoration: BoxDecoration(color: Color(0xFFCFD8DC), borderRadius: BorderRadius.circular(6)),
-                                                    child: Icon(
-                                                      Icons.add,
-                                                      size: 15,
+                                                    SizedBox(
+                                                      width: 10,
                                                     ),
-                                                  ),
+                                                    InkWell(
+                                                      onTap: () {
+                                                        if (docScan[index].qty!.text.isNotEmpty) {
+                                                          final current = int.tryParse(docScan[index].qty!.text);
+                                                          final newValue = current! + 1;
+                                                          docScan[index].qty!.text = newValue.toString();
+                                                          setState(() {
+                                                            docScan[index].totalPrice = (int.parse(docScan[index].qty!.text) * int.parse(docScan[index].item!.sup_item!.price!));
+                                                          });
+                                                        } else {
+                                                          const int newValue = 1;
+                                                          docScan[index].qty!.text = newValue.toString();
+                                                          setState(() {
+                                                            docScan[index].totalPrice = (int.parse(docScan[index].qty!.text) * int.parse(docScan[index].item!.sup_item!.price!));
+                                                          });
+                                                        }
+                                                      },
+                                                      child: Container(
+                                                        width: size.width * 0.07,
+                                                        height: size.width * 0.07,
+                                                        decoration: BoxDecoration(color: Color(0xFFCFD8DC), borderRadius: BorderRadius.circular(6)),
+                                                        child: Icon(
+                                                          Icons.add,
+                                                          size: 15,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
-                                              ],
-                                            ),
-                                            Row(
-                                              children: [
-                                                Text(
-                                                  'เหลือจำนวน: ',
-                                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                                                Row(
+                                                  children: [
+                                                    Text(
+                                                      'เหลือจำนวน: ',
+                                                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                                                    ),
+                                                    Text(
+                                                      '${docScan[index].item?.stock_current_balance ?? '0'}',
+                                                      style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
+                                                    ),
+                                                  ],
                                                 ),
-                                                Text(
-                                                  '${docScan[index].item?.stock_current_balance ?? '0'}',
-                                                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
+                                                Row(
+                                                  children: [
+                                                    Text(
+                                                      'ราคาต่อหน่วย: ',
+                                                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                                                    ),
+                                                    Text(
+                                                      '${docScan[index].item?.sup_item?.price}',
+                                                      style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
+                                                    ),
+                                                  ],
                                                 ),
-                                              ],
-                                            ),
-                                            Row(
-                                              children: [
-                                                Text(
-                                                  'ราคาต่อหน่วย: ',
-                                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-                                                ),
-                                                Text(
-                                                  '${docScan[index].item?.sup_item?.price}',
-                                                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
-                                                ),
-                                              ],
-                                            ),
-                                            Row(
-                                              children: [
-                                                Text(
-                                                  'ราคารวม: ',
-                                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-                                                ),
-                                                Text(
-                                                  '${docScan[index].totalPrice ?? ''}',
-                                                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
+                                                Row(
+                                                  children: [
+                                                    Text(
+                                                      'ราคารวม: ',
+                                                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                                                    ),
+                                                    Text(
+                                                      '${docScan[index].totalPrice ?? ''}',
+                                                      style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
+                                                    ),
+                                                  ],
                                                 ),
                                               ],
                                             ),

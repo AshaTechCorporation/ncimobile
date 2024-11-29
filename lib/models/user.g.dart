@@ -13,8 +13,12 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
       username: json['username'] as String?,
       status: json['status'] as bool?,
       image: json['image'] as String?,
-      employee: json['employee'] == null ? null : Employee.fromJson(json['employee'] as Map<String, dynamic>),
-      hr_employee: json['hr_employee'] == null ? null : Employee.fromJson(json['hr_employee'] as Map<String, dynamic>),
+      employee: json['employee'] == null
+          ? null
+          : Employee.fromJson(json['employee'] as Map<String, dynamic>),
+      hr_employee: json['hr_employee'] == null
+          ? null
+          : Employee.fromJson(json['hr_employee'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{

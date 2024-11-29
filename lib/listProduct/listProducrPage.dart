@@ -9,6 +9,7 @@ import 'package:ncimobile/listProduct/Service/WithdrawItemsController.dart';
 import 'package:ncimobile/listProduct/Service/WithdrawItemsService.dart';
 import 'package:ncimobile/listProduct/WithdarwSearch/withdarwSearchPage.dart';
 import 'package:ncimobile/listProduct/addItem/addItemPage.dart';
+import 'package:ncimobile/listProduct/detailWithdarwPAge.dart';
 import 'package:ncimobile/login/loginPage.dart';
 import 'package:ncimobile/utils/ApiExeption.dart';
 import 'package:provider/provider.dart';
@@ -378,10 +379,10 @@ class _ListProducrPageState extends State<ListProducrPage> {
                                                     'ผู้เบิก: ${controller.listWithdraws?[index].user?.hr_employee?.fname ?? ''}  ${controller.listWithdraws?[index].user?.hr_employee?.lname ?? ''}',
                                                     style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                                                   ),
-                                                  Text(
-                                                    'รายละเอียดการเบิก: ${controller.listWithdraws?[index].remark ?? ' - '}',
-                                                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                                                  ),
+                                                  // Text(
+                                                  //   'รายละเอียดการเบิก: ${controller.listWithdraws?[index].remark ?? ' - '}',
+                                                  //   style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                                                  // ),
                                                 ],
                                               )),
                                         ),
@@ -398,71 +399,80 @@ class _ListProducrPageState extends State<ListProducrPage> {
                                     child: Column(
                                       children: List.generate(
                                         controller.listWithdraws?.length ?? 0,
-                                        (index) => Container(
-                                            width: double.infinity,
-                                            margin: const EdgeInsets.symmetric(vertical: 8),
-                                            padding: EdgeInsets.all(8),
-                                            decoration: BoxDecoration(
-                                              border: Border.all(color: Colors.grey, width: 1),
-                                              borderRadius: BorderRadius.circular(15),
-                                            ),
-                                            child: Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                Row(
-                                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                  children: [
-                                                    Column(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                      children: [
-                                                        // ${DateTime.parse(controller.listWithdraws![index].date!).formatTo('dd MMM yy')}
-                                                        Text(
-                                                          'เบิกวันที่:  ${convertToBuddhistDate(DateTime.parse(controller.listWithdraws![index].date!))}',
-                                                          style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                                                        ),
-                                                        Text(
-                                                          'เลขที่ใบเบิก: ${controller.listWithdraws?[index].code ?? ''}',
-                                                          style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    Container(
-                                                      width: size.width * 0.3,
-                                                      padding: EdgeInsets.all(8),
-                                                      decoration: BoxDecoration(
-                                                        color: Colors.green,
-                                                        borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                                                      ),
-                                                      child: Column(
-                                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        (index) => GestureDetector(
+                                          onTap: () {
+                                            Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                              return DetailWithdarwPage(
+                                                data: controller.listWithdraws![index],
+                                              );
+                                            }));
+                                          },
+                                          child: Container(
+                                              width: double.infinity,
+                                              margin: const EdgeInsets.symmetric(vertical: 8),
+                                              padding: EdgeInsets.all(8),
+                                              decoration: BoxDecoration(
+                                                border: Border.all(color: Colors.grey, width: 1),
+                                                borderRadius: BorderRadius.circular(15),
+                                              ),
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Row(
+                                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                    children: [
+                                                      Column(
                                                         crossAxisAlignment: CrossAxisAlignment.start,
                                                         children: [
+                                                          // ${DateTime.parse(controller.listWithdraws![index].date!).formatTo('dd MMM yy')}
                                                           Text(
-                                                            'สถานะ',
-                                                            style: TextStyle(color: Colors.white, fontSize: 12),
+                                                            'เบิกวันที่:  ${convertToBuddhistDate(DateTime.parse(controller.listWithdraws![index].date!))}',
+                                                            style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                                                           ),
-                                                          Center(
-                                                            child: Text(
-                                                              controller.listWithdraws?[index].approved == 'finish' ? 'สำเร็จ' : 'รอยืนยันการเบิก',
-                                                              style: TextStyle(color: Colors.white, fontSize: 15),
-                                                            ),
-                                                          )
+                                                          Text(
+                                                            'เลขที่ใบเบิก: ${controller.listWithdraws?[index].code ?? ''}',
+                                                            style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                                                          ),
                                                         ],
                                                       ),
-                                                    ),
-                                                  ],
-                                                ),
-                                                Text(
-                                                  'ผู้เบิก: ${controller.listWithdraws?[index].user?.hr_employee?.fname ?? ''}  ${controller.listWithdraws?[index].user?.hr_employee?.lname ?? ''}',
-                                                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                                                ),
-                                                Text(
-                                                  'รายละเอียดการเบิก: ${controller.listWithdraws?[index].remark ?? ' - '}',
-                                                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                                                ),
-                                              ],
-                                            )),
+                                                      Container(
+                                                        width: size.width * 0.3,
+                                                        padding: EdgeInsets.all(8),
+                                                        decoration: BoxDecoration(
+                                                          color: Colors.green,
+                                                          borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                                                        ),
+                                                        child: Column(
+                                                          mainAxisAlignment: MainAxisAlignment.center,
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          children: [
+                                                            Text(
+                                                              'สถานะ',
+                                                              style: TextStyle(color: Colors.white, fontSize: 12),
+                                                            ),
+                                                            Center(
+                                                              child: Text(
+                                                                controller.listWithdraws?[index].approved == 'finish' ? 'สำเร็จ' : 'รอยืนยันการเบิก',
+                                                                style: TextStyle(color: Colors.white, fontSize: 15),
+                                                              ),
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  Text(
+                                                    'ผู้เบิก: ${controller.listWithdraws?[index].user?.hr_employee?.fname ?? ''}  ${controller.listWithdraws?[index].user?.hr_employee?.lname ?? ''}',
+                                                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                                                  ),
+                                                  // Text(
+                                                  //   'รายละเอียดการเบิก: ${controller.listWithdraws?[index].remark ?? ' - '}',
+                                                  //   style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                                                  // ),
+                                                ],
+                                              )),
+                                        ),
                                       ),
                                     ),
                                   ),

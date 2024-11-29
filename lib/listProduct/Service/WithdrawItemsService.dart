@@ -27,7 +27,7 @@ class WithdrawItemsService {
     }
   }
 
-  static Future<Item> searchBarCode({required String barcode, required int department}) async {
+  static Future<Item> searchBarCode({required String barcode, required String department}) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
     var headers = {'Authorization': 'Bearer $token', 'Content-Type': 'application/json'};
