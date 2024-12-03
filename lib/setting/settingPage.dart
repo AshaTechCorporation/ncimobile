@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:ncimobile/Dialog.dart';
 import 'package:ncimobile/LoadingDialog.dart';
+import 'package:ncimobile/app/appController.dart';
 import 'package:ncimobile/constants.dart';
 import 'package:ncimobile/login/loginPage.dart';
+import 'package:ncimobile/models/user.dart';
 import 'package:ncimobile/project/widgets/HeadderProjectWidget.dart';
 import 'package:ncimobile/setting/Report/ReportPage.dart';
+import 'package:ncimobile/utils/ApiExeption.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingPage extends StatefulWidget {
@@ -15,6 +20,64 @@ class SettingPage extends StatefulWidget {
 }
 
 class _SettingPageState extends State<SettingPage> {
+  User? user;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await getUser();
+    });
+  }
+
+  getUser() async {
+    try {
+      await context.read<AppController>().initialize();
+      final user2 = context.read<AppController>().user;
+      setState(() {
+        user = user2;
+      });
+    } on ClientException catch (e) {
+      if (!mounted) return;
+      LoadingDialog.close(context);
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialogYes(
+          title: 'แจ้งเตือน',
+          description: '$e',
+          pressYes: () {
+            if (e.toString() != 'Token is expire' && e.toString() != 'Can not verify identity') {
+              Navigator.pop(context);
+            } else {
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+                return Loginpage();
+              }));
+            }
+          },
+        ),
+      );
+    } on ApiException catch (e) {
+      if (!mounted) return;
+      LoadingDialog.close(context);
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialogYes(
+          title: 'แจ้งเตือน',
+          description: '$e',
+          pressYes: () {
+            if (e.toString() != 'Token is expire' && e.toString() != 'Can not verify identity') {
+              Navigator.pop(context);
+            } else {
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+                return Loginpage();
+              }));
+            }
+          },
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -24,6 +87,7 @@ class _SettingPageState extends State<SettingPage> {
         shrinkWrap: true,
         children: [
           HeadderProjectWidget(
+            user: user,
             size: size,
             pressChat: () {},
             pressNoti: () {},
@@ -80,25 +144,25 @@ class _SettingPageState extends State<SettingPage> {
                   child: Column(
                     children: [
                       Row(
-                        children: [Icon(Icons.person), Text('นางสาว สมศรี รักศึกษา')],
+                        children: [Icon(Icons.person), Text('${user?.hr_employee?.fname ?? ''} ${user?.hr_employee?.lname ?? ''}')],
                       ),
                       SizedBox(
                         height: 10,
                       ),
                       Row(
-                        children: [Icon(Icons.email), Text('placeholder.mail@somemail.ac.th')],
+                        children: [Icon(Icons.email), Text('${user?.hr_employee?.email ?? ''}')],
                       ),
                       SizedBox(
                         height: 10,
                       ),
                       Row(
-                        children: [Icon(Icons.phone), Text('+66  1234567890')],
+                        children: [Icon(Icons.phone), Text('${user?.hr_employee?.tel ?? ''}')],
                       ),
                       SizedBox(
                         height: 10,
                       ),
                       Row(
-                        children: [Icon(Icons.file_copy), Text('แผนก ภาษาไทย')],
+                        children: [Icon(Icons.file_copy), Text('แผนก ${user?.hr_employee?.ci_department?.name ?? ''}')],
                       ),
                       SizedBox(
                         height: 10,

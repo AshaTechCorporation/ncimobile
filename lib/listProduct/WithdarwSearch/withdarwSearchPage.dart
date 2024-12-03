@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ncimobile/LoadingDialog.dart';
 import 'package:ncimobile/home/firstPage.dart';
 import 'package:ncimobile/listProduct/Service/WithdrawItemsService.dart';
+import 'package:ncimobile/listProduct/detailWithdarwPage.dart';
 import 'package:ncimobile/models/withdrawItem.dart';
 
 class WithdarwSearchPage extends StatefulWidget {
@@ -102,7 +103,7 @@ class _WithdarwSearchPageState extends State<WithdarwSearchPage> {
                                   ? SizedBox.shrink()
                                   : GestureDetector(
                                       onTap: () async {
-                                        if (listWithdraws?[index].approved != 'finish' || listWithdraws?[index].approved == 'cancel') {
+                                        if (listWithdraws?[index].approved != 'finish') {
                                           final approved = await showDialog<String>(
                                             barrierDismissible: false,
                                             barrierColor: Color.fromARGB(217, 158, 158, 158),
@@ -157,6 +158,12 @@ class _WithdarwSearchPageState extends State<WithdarwSearchPage> {
                                             Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: ((context) => FirstPage())), (route) => false);
                                             LoadingDialog.close(context);
                                           }
+                                        } else {
+                                          Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                            return DetailWithdarwPage(
+                                              data: listWithdraws![index],
+                                            );
+                                          }));
                                         }
                                       },
                                       child: Container(

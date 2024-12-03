@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:ncimobile/Dialog.dart';
 import 'package:ncimobile/LoadingDialog.dart';
+import 'package:ncimobile/app/appController.dart';
 import 'package:ncimobile/constants.dart';
 import 'package:ncimobile/disbursement/widgets/HeadderDisburWidget.dart';
 import 'package:ncimobile/listProduct/Service/WithdrawItemsController.dart';
@@ -11,6 +12,7 @@ import 'package:ncimobile/listProduct/WithdarwSearch/withdarwSearchPage.dart';
 import 'package:ncimobile/listProduct/addItem/addItemPage.dart';
 import 'package:ncimobile/listProduct/detailWithdarwPAge.dart';
 import 'package:ncimobile/login/loginPage.dart';
+import 'package:ncimobile/models/user.dart';
 import 'package:ncimobile/utils/ApiExeption.dart';
 import 'package:provider/provider.dart';
 
@@ -24,21 +26,24 @@ class ListProducrPage extends StatefulWidget {
 class _ListProducrPageState extends State<ListProducrPage> {
   var options = ScanOptions();
   int? title = 0;
+  User? user;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await listWithdrawAll(status: title == 0 ? 'open' : 'finish');
+      await getUser();
     });
   }
 
-  Future listWithdrawAll({String? search, String? status}) async {
+  getUser() async {
     try {
-      LoadingDialog.open(context);
-      await context.read<WithdrawItemsController>().getListWithdraw(search: search, status: status);
-      if (!mounted) return;
-      LoadingDialog.close(context);
+      await context.read<AppController>().initialize();
+      final user2 = context.read<AppController>().user;
+      setState(() {
+        user = user2;
+      });
     } on ClientException catch (e) {
       if (!mounted) return;
       LoadingDialog.close(context);
@@ -48,7 +53,7 @@ class _ListProducrPageState extends State<ListProducrPage> {
           title: 'แจ้งเตือน',
           description: '$e',
           pressYes: () {
-            if (e.toString() != 'Token is expire') {
+            if (e.toString() != 'Token is expire' && e.toString() != 'Can not verify identity') {
               Navigator.pop(context);
             } else {
               Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
@@ -67,7 +72,54 @@ class _ListProducrPageState extends State<ListProducrPage> {
           title: 'แจ้งเตือน',
           description: '$e',
           pressYes: () {
-            if (e.toString() != 'Token is expire') {
+            if (e.toString() != 'Token is expire' && e.toString() != 'Can not verify identity') {
+              Navigator.pop(context);
+            } else {
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+                return Loginpage();
+              }));
+            }
+          },
+        ),
+      );
+    }
+  }
+
+  Future listWithdrawAll({String? search, String? status}) async {
+    try {
+      LoadingDialog.open(context);
+      await context.read<WithdrawItemsController>().getListWithdraw(search: search, status: status);
+      if (!mounted) return;
+      LoadingDialog.close(context);
+    } on ClientException catch (e) {
+      if (!mounted) return;
+      LoadingDialog.close(context);
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialogYes(
+          title: 'แจ้งเตือน',
+          description: '$e',
+          pressYes: () {
+            if (e.toString() != 'Token is expire' && e.toString() != 'Can not verify identity') {
+              Navigator.pop(context);
+            } else {
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+                return Loginpage();
+              }));
+            }
+          },
+        ),
+      );
+    } on ApiException catch (e) {
+      if (!mounted) return;
+      LoadingDialog.close(context);
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialogYes(
+          title: 'แจ้งเตือน',
+          description: '$e',
+          pressYes: () {
+            if (e.toString() != 'Token is expire' && e.toString() != 'Can not verify identity') {
               Navigator.pop(context);
             } else {
               Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
@@ -96,6 +148,7 @@ class _ListProducrPageState extends State<ListProducrPage> {
             shrinkWrap: true,
             children: [
               HeadderDisburWidget(
+                user: user,
                 size: size,
                 pressChat: () {},
                 pressNoti: () {},

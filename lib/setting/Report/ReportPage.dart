@@ -348,7 +348,7 @@ class _ReportPageState extends State<ReportPage> {
                           title: 'แจ้งเตือน',
                           description: '$e',
                           pressYes: () {
-                            if (e.toString() != 'Token is expire') {
+                            if (e.toString() != 'Token is expire' && e.toString() != 'Can not verify identity') {
                               Navigator.pop(context);
                             } else {
                               Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
@@ -367,7 +367,7 @@ class _ReportPageState extends State<ReportPage> {
                           title: 'แจ้งเตือน',
                           description: '$e',
                           pressYes: () {
-                            if (e.toString() != 'Token is expire') {
+                            if (e.toString() != 'Token is expire' && e.toString() != 'Can not verify identity') {
                               Navigator.pop(context);
                             } else {
                               Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {

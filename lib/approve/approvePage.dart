@@ -1,11 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:http/http.dart';
+import 'package:ncimobile/Dialog.dart';
+import 'package:ncimobile/LoadingDialog.dart';
+import 'package:ncimobile/app/appController.dart';
 import 'package:ncimobile/approve/widgets/CardApproveDisbursementWidget.dart';
 import 'package:ncimobile/approve/widgets/ProjectApproveWidget.dart';
 import 'package:ncimobile/constants.dart';
 import 'package:ncimobile/disbursement/widgets/HeadderDisburWidget.dart';
+import 'package:ncimobile/login/loginPage.dart';
+import 'package:ncimobile/models/user.dart';
 import 'package:ncimobile/project/widgets/SearchProjectWidget.dart';
+import 'package:ncimobile/utils/ApiExeption.dart';
+import 'package:provider/provider.dart';
 
 class ApprovePage extends StatefulWidget {
   const ApprovePage({super.key});
@@ -16,6 +24,64 @@ class ApprovePage extends StatefulWidget {
 
 class _ApprovePageState extends State<ApprovePage> {
   int? title = 0;
+  User? user;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await getUser();
+    });
+  }
+
+  getUser() async {
+    try {
+      await context.read<AppController>().initialize();
+      final user2 = context.read<AppController>().user;
+      setState(() {
+        user = user2;
+      });
+    } on ClientException catch (e) {
+      if (!mounted) return;
+      LoadingDialog.close(context);
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialogYes(
+          title: 'แจ้งเตือน',
+          description: '$e',
+          pressYes: () {
+            if (e.toString() != 'Token is expire' && e.toString() != 'Can not verify identity') {
+              Navigator.pop(context);
+            } else {
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+                return Loginpage();
+              }));
+            }
+          },
+        ),
+      );
+    } on ApiException catch (e) {
+      if (!mounted) return;
+      LoadingDialog.close(context);
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialogYes(
+          title: 'แจ้งเตือน',
+          description: '$e',
+          pressYes: () {
+            if (e.toString() != 'Token is expire' && e.toString() != 'Can not verify identity') {
+              Navigator.pop(context);
+            } else {
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+                return Loginpage();
+              }));
+            }
+          },
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -25,6 +91,7 @@ class _ApprovePageState extends State<ApprovePage> {
         shrinkWrap: true,
         children: [
           HeadderDisburWidget(
+            user: user,
             size: size,
             pressChat: () {},
             pressNoti: () {},

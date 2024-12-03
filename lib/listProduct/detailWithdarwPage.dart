@@ -141,7 +141,12 @@ class _DetailWithdarwPageState extends State<DetailWithdarwPage> {
                             ),
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          child: Image.network(widget.data.sup_item_trans![index].sup_item?.image ?? ''),
+                          child: Image.network(
+                            widget.data.sup_item_trans![index].sup_item?.image ?? '',
+                            errorBuilder: (context, error, stackTrace) => Center(
+                              child: Image.asset('assets/images/No_Image_Available.jpg'),
+                            ),
+                          ),
                         ),
                         SizedBox(
                           width: 10,

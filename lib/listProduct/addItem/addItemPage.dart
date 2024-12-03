@@ -74,7 +74,7 @@ class _AddItemPageState extends State<AddItemPage> {
           title: 'แจ้งเตือน',
           description: '$e',
           pressYes: () {
-            if (e.toString() != 'Token is expire') {
+            if (e.toString() != 'Token is expire' && e.toString() != 'Can not verify identity') {
               Navigator.pop(context);
             } else {
               Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
@@ -93,7 +93,7 @@ class _AddItemPageState extends State<AddItemPage> {
           title: 'แจ้งเตือน',
           description: '$e',
           pressYes: () {
-            if (e.toString() != 'Token is expire') {
+            if (e.toString() != 'Token is expire' && e.toString() != 'Can not verify identity') {
               Navigator.pop(context);
             } else {
               Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
@@ -152,7 +152,7 @@ class _AddItemPageState extends State<AddItemPage> {
                         title: 'แจ้งเตือน',
                         description: '$e',
                         pressYes: () {
-                          if (e.toString() != 'Token is expire') {
+                          if (e.toString() != 'Token is expire' && e.toString() != 'Can not verify identity') {
                             Navigator.pop(context);
                           } else {
                             Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
@@ -421,6 +421,9 @@ class _AddItemPageState extends State<AddItemPage> {
                                               child: Image.network(
                                                 docScan[index].item?.sup_item?.image ?? '',
                                                 fit: BoxFit.fill,
+                                                errorBuilder: (context, error, stackTrace) => Center(
+                                                  child: Image.asset('assets/images/No_Image_Available.jpg'),
+                                                ),
                                               ),
                                             ),
                                             SizedBox(
@@ -805,7 +808,7 @@ class _AddItemPageState extends State<AddItemPage> {
                           title: 'แจ้งเตือน',
                           description: '$e',
                           pressYes: () {
-                            if (e.toString() != 'Token is expire') {
+                            if (e.toString() != 'Token is expire' && e.toString() != 'Can not verify identity') {
                               Navigator.pop(context);
                             } else {
                               Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
@@ -824,7 +827,7 @@ class _AddItemPageState extends State<AddItemPage> {
                           title: 'แจ้งเตือน',
                           description: '$e',
                           pressYes: () {
-                            if (e.toString() != 'Token is expire') {
+                            if (e.toString() != 'Token is expire' && e.toString() != 'Can not verify identity') {
                               Navigator.pop(context);
                             } else {
                               Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {

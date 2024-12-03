@@ -6,9 +6,11 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:intl/intl.dart';
 import 'package:ncimobile/Dialog.dart';
 import 'package:ncimobile/LoadingDialog.dart';
+import 'package:ncimobile/app/appController.dart';
 import 'package:ncimobile/constants.dart';
 import 'package:ncimobile/login/loginPage.dart';
 import 'package:ncimobile/models/project.dart';
+import 'package:ncimobile/models/user.dart';
 import 'package:ncimobile/project/projectDetailPage.dart';
 import 'package:ncimobile/project/service/ProjcetController.dart';
 import 'package:ncimobile/project/widgets/CardContentProjectWidget.dart';
@@ -32,16 +34,66 @@ class _ProjectPageState extends State<ProjectPage> {
   int? title = 0;
   List<Map<String, dynamic>> listPro = [];
   bool isExpanded = false;
+  User? user;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await getUser();
       await listProjectsAll();
     });
     // pagingController.addPageRequestListener((pageKey) {
     //   fetchPage(pageKey);
     // });
+  }
+
+  getUser() async {
+    try {
+      await context.read<AppController>().initialize();
+      final user2 = context.read<AppController>().user;
+      setState(() {
+        user = user2;
+      });
+    } on ClientException catch (e) {
+      if (!mounted) return;
+      LoadingDialog.close(context);
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialogYes(
+          title: 'แจ้งเตือน',
+          description: '$e',
+          pressYes: () {
+            if (e.toString() != 'Token is expire' && e.toString() != 'Can not verify identity') {
+              Navigator.pop(context);
+            } else {
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+                return Loginpage();
+              }));
+            }
+          },
+        ),
+      );
+    } on ApiException catch (e) {
+      if (!mounted) return;
+      LoadingDialog.close(context);
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialogYes(
+          title: 'แจ้งเตือน',
+          description: '$e',
+          pressYes: () {
+            if (e.toString() != 'Token is expire' && e.toString() != 'Can not verify identity') {
+              Navigator.pop(context);
+            } else {
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+                return Loginpage();
+              }));
+            }
+          },
+        ),
+      );
+    }
   }
 
   // Future<void> fetchPage(int pageKey) async {
@@ -71,7 +123,7 @@ class _ProjectPageState extends State<ProjectPage> {
           title: 'แจ้งเตือน',
           description: '$e',
           pressYes: () {
-            if (e.toString() != 'Token is expire') {
+            if (e.toString() != 'Token is expire' && e.toString() != 'Can not verify identity') {
               Navigator.pop(context);
             } else {
               Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
@@ -90,7 +142,7 @@ class _ProjectPageState extends State<ProjectPage> {
           title: 'แจ้งเตือน',
           description: '$e',
           pressYes: () {
-            if (e.toString() != 'Token is expire') {
+            if (e.toString() != 'Token is expire' && e.toString() != 'Can not verify identity') {
               Navigator.pop(context);
             } else {
               Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
@@ -119,6 +171,7 @@ class _ProjectPageState extends State<ProjectPage> {
           shrinkWrap: true,
           children: [
             HeadderProjectWidget(
+              user: user,
               size: size,
               pressChat: () {},
               pressNoti: () {},
